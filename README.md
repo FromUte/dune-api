@@ -1,4 +1,5 @@
 # Neighborly::Api
+[![Build Status](https://travis-ci.org/neighborly/neighborly-api.svg?branch=master)](https://travis-ci.org/neighborly/neighborly-api) [![Code Climate](https://codeclimate.com/github/neighborly/neighborly-api.png)](https://codeclimate.com/github/neighborly/neighborly-api)
 
 TODO: Write a gem description
 
