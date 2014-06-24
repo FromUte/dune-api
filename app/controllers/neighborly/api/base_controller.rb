@@ -1,12 +1,13 @@
 module Neighborly::Api
   class BaseController < ActionController::Metal
-    include ActionController::Redirecting
     include AbstractController::Rendering
-    include ActionController::Renderers::All
-    include ActionController::MimeResponds
     include ActionController::ConditionalGet
     include ActionController::ForceSSL
     include ActionController::Instrumentation
+    include ActionController::MimeResponds
+    include ActionController::Redirecting
+    include ActionController::Renderers::All
+    include ActionController::Rendering
 
     #include ActionController::Helpers
     #include ActionController::UrlFor
@@ -15,5 +16,7 @@ module Neighborly::Api
     #include ActionController::Rescue
 
     include Neighborly::Api::Engine.routes.url_helpers
+
+    respond_to :json
   end
 end

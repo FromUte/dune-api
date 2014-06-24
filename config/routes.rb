@@ -3,5 +3,7 @@ Neighborly::Api::Engine.routes.draw do
         constraints: Neighborly::Api::ApiConstraint.new(version: 1, default: true),
         defaults: { format: :json } do
     resources :projects
+
+    post 'sessions', to: 'sessions#create'
   end
 end
