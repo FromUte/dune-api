@@ -5,7 +5,7 @@ module Neighborly::Api
 
       def create
         user = User.find_by(email: params.fetch(:email))
-        if user.valid_password?(params.fetch(:password))
+        if user && user.valid_password?(params.fetch(:password))
           render status: :created, json: {
             access_token: user.get_access_token,
             user_id:      user.id
