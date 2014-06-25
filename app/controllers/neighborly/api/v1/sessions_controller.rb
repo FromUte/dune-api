@@ -11,10 +11,10 @@ module Neighborly::Api
             user_id:      user.id
           }
         else
-          head :unauthorized
+          render status: :unauthorized, json: { }
         end
       rescue KeyError
-        head :bad_request
+        render status: :bad_request, json: { }
       end
 
       def destroy
