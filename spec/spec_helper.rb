@@ -15,4 +15,11 @@ RSpec.configure do |config|
   config.include RSpec::Rails::ControllerExampleGroup,
      file_path: %r(spec/controllers)
   config.use_transactional_fixtures = true
+
+  # Stubs required from the main application
+  config.before(:each) do
+    double(::UserObserver)
+    allow_any_instance_of(UserObserver).to receive(:after_create)
+    allow_any_instance_of(UserObserver).to receive(:after_save)
+  end
 end
