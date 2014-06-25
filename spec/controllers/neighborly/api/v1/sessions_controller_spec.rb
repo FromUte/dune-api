@@ -34,40 +34,24 @@ describe Neighborly::Api::V1::SessionsController do
   end
 
   describe '#destroy' do
-    let(:valid_access_token) { FactoryGirl.create(:access_token, user: user) }
+    let(:do_request) { delete :destroy }
+    it_behaves_like 'checking authorization'
 
     context 'when access_token is provided' do
       context 'and is valid' do
+        before do
+          request.env['HTTP_AUTHORIZATION'] = "Token token=#{valid_access_token.code}"
+        end
+        let(:valid_access_token) { FactoryGirl.create(:access_token, user: user) }
+
         it 'responds with 200' do
-          delete :destroy, access_token: valid_access_token.code
           expect(response.status).to eql(200)
         end
 
         it 'expires given access_token' do
-          delete :destroy, access_token: valid_access_token.code
+          delete :destroy
           expect(valid_access_token.reload).to be_expired
         end
-      end
-
-      context 'and is not valid' do
-        it 'responds with 400 when inexistant' do
-          delete :destroy, access_token: 'invalid-access-token'
-          expect(response.status).to eql(400)
-        end
-
-        it 'responds with 400 when already expired' do
-          valid_access_token.expire!
-          delete :destroy, access_token: valid_access_token.code
-          expect(response.status).to eql(400)
-        end
-      end
-    end
-
-    context 'when access_token is not provided' do
-      it 'responds with 400' do
-        expect {
-          delete :destroy
-        }.to raise_error(ActionController::ParameterMissing)
       end
     end
   end

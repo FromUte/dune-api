@@ -1,6 +1,8 @@
 module Neighborly::Api
   module V1
     class SessionsController < BaseController
+      before_action :check_authorization!, only: %i(destroy)
+
       def create
         user = User.find_by(email: params.fetch(:email))
         if user.valid_password?(params.fetch(:password))
@@ -16,13 +18,7 @@ module Neighborly::Api
       end
 
       def destroy
-        access_token = AccessToken.find_by(code: params.fetch(:access_token))
-        if access_token
-          access_token.expire!
-          head :ok
-        else
-          head :bad_request
-        end
+        access_token.try(:expire!)
       end
     end
   end
