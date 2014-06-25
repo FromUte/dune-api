@@ -2,9 +2,15 @@ module Neighborly::Api
   class AccessToken < ActiveRecord::Base
     self.table_name = :api_access_tokens
 
+    default_scope { where(expired: false) }
     belongs_to :user
 
     before_create :generate_token
+
+    def expire!
+      self.expired = true
+      save
+    end
 
     protected
 

@@ -14,6 +14,16 @@ module Neighborly::Api
       rescue KeyError
         head :bad_request
       end
+
+      def destroy
+        access_token = AccessToken.find_by(code: params.fetch(:access_token))
+        if access_token
+          access_token.expire!
+          head :ok
+        else
+          head :bad_request
+        end
+      end
     end
   end
 end
