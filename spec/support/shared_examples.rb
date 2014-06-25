@@ -1,6 +1,11 @@
-RSpec.shared_examples 'checking authorization' do
+RSpec.shared_context 'authorized context', authorized: true do
   let(:valid_access_token) { FactoryGirl.create(:access_token, user: user) }
+  let!(:user)              { super() || FactoryGirl.create(:user) }
 
+  it_behaves_like 'checking authorization'
+end
+
+RSpec.shared_examples 'checking authorization' do
   context 'when access_token is provided' do
     before do
       request.env['HTTP_AUTHORIZATION'] = "Token token=#{valid_access_token.code}"

@@ -33,9 +33,8 @@ describe Neighborly::Api::V1::SessionsController do
     end
   end
 
-  describe '#destroy' do
+  describe '#destroy', authorized: true do
     let(:do_request) { delete :destroy }
-    it_behaves_like 'checking authorization'
 
     context 'when access_token is provided' do
       context 'and is valid' do
