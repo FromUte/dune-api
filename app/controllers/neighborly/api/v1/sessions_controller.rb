@@ -1,6 +1,8 @@
 module Neighborly::Api
   module V1
     class SessionsController < BaseController
+      skip_before_action :check_authorization!, only: :create
+
       def create
         user = User.find_by(email: params.fetch(:email))
         if user.valid_password?(params.fetch(:password))
@@ -13,6 +15,10 @@ module Neighborly::Api
         end
       rescue KeyError
         head :bad_request
+      end
+
+      def destroy
+        access_token.try(:expire!)
       end
     end
   end

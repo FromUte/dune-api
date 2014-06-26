@@ -32,4 +32,26 @@ describe Neighborly::Api::V1::SessionsController do
       expect(parsed_response['user_id']).to      eql(user.id)
     end
   end
+
+  describe '#destroy', authorized: true do
+    let(:do_request) { delete :destroy }
+
+    context 'when access_token is provided' do
+      context 'and is valid' do
+        before do
+          request.env['HTTP_AUTHORIZATION'] = "Token token=#{valid_access_token.code}"
+        end
+        let(:valid_access_token) { FactoryGirl.create(:access_token, user: user) }
+
+        it 'responds with 200' do
+          expect(response.status).to eql(200)
+        end
+
+        it 'expires given access_token' do
+          delete :destroy
+          expect(valid_access_token.reload).to be_expired
+        end
+      end
+    end
+  end
 end
