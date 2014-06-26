@@ -1,7 +1,7 @@
 module Neighborly::Api
   module V1
     class SessionsController < BaseController
-      before_action :check_authorization!, only: %i(destroy)
+      skip_before_action :check_authorization!, only: :create
 
       def create
         user = User.find_by(email: params.fetch(:email))

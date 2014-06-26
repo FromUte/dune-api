@@ -3,9 +3,11 @@ require 'spec_helper'
 describe Neighborly::Api::V1::ProjectsController do
   routes { Neighborly::Api::Engine.routes }
 
-  describe '#index' do
+  describe '#index', authorized: true do
+    let(:do_request) { get :index, format: :json }
+
     it 'returns a json' do
-      get :index, format: :json
+      do_request
       #, {}, { 'Accept' => 'application/vnd.neighbor.ly; version=1' }
       json = JSON.parse(response.body)
 

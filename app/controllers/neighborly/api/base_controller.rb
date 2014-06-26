@@ -18,6 +18,8 @@ module Neighborly::Api
 
     include Neighborly::Api::Engine.routes.url_helpers
 
+    before_action :check_authorization!
+
     respond_to :json
 
     def access_token
