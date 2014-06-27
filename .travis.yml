@@ -13,4 +13,4 @@ before_script:
   - 'cd ../../'
 
 script:
-  - 'bundle exec rake spec'
+  - 'bundle exec rspec'
