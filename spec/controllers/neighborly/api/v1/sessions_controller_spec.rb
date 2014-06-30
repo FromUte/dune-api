@@ -11,6 +11,11 @@ describe Neighborly::Api::V1::SessionsController do
       expect(response.status).to eql(401)
     end
 
+    it 'responds with 401 when requested with invalid email' do
+      post :create, email: 'wrong-email', password: 'wrong-password'
+      expect(response.status).to eql(401)
+    end
+
     it 'responds with 400 when requested with no email' do
       post :create, password: 'right-password'
       expect(response.status).to eql(400)
