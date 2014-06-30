@@ -56,6 +56,11 @@ describe Neighborly::Api::V1::SessionsController do
           delete :destroy
           expect(valid_access_token.reload).to be_expired
         end
+
+        it 'renders empty json' do
+          delete :destroy
+          expect(parsed_response).to be_empty
+        end
       end
     end
   end

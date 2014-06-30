@@ -11,14 +11,16 @@ module Neighborly::Api
             user_id:      user.id
           }
         else
-          render status: :unauthorized, json: { }
+          render status: :unauthorized, json: {}
         end
       rescue KeyError
-        render status: :bad_request, json: { }
+        render status: :bad_request, json: {}
       end
 
       def destroy
         access_token.try(:expire!)
+
+        render status: :ok, json: {}
       end
     end
   end
