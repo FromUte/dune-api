@@ -7,14 +7,25 @@ Here you will find how to integrate an application with Neighbor.ly. Check our [
 # Sessions
 Your first stop when integrating with Neighborly. For a lot of endpoints, you are expected to provide an `access_token`, managed by this section.
 
+
 ## Sessions [/sessions]
 ### Create a session [POST]
-+ Request (application/json)
+
++ Request
 
         { "email": "mr.nobody@example.com", "password": "your-really-strong-password" }
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
 
 + Response 201 (application/json)
 
         { "access_token": "Ndf6kxgLfr_KMhAg8wMpm7Yit2cvHkv9oI8qIXWiHmZdeqI1h0cmn8p4wCEhoZS-AQY", "user_id": 1 }
 
-Can also respond with 400 and 401, depending on the parameters given.
++ Response 400 (application/json)
+        {}
+
+
++ Response 401 (application/json)
+        {}
