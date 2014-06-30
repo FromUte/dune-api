@@ -13,19 +13,24 @@ Your first stop when integrating with Neighborly. For a lot of endpoints, you ar
 
 + Request
 
-        { "email": "mr.nobody@example.com", "password": "your-really-strong-password" }
-
     + Header
 
             Accept: application/vnd.api+json;revision=1
+
+    + Body
+
+            { "email": "mr.nobody@example.com", "password": "your-really-strong-password" }
 
 + Response 201 (application/json)
 
         { "access_token": "Ndf6kxgLfr_KMhAg8wMpm7Yit2cvHkv9oI8qIXWiHmZdeqI1h0cmn8p4wCEhoZS-AQY", "user_id": 1 }
 
 + Response 400 (application/json)
+
         {}
 
 
 + Response 401 (application/json)
+
         {}
+
