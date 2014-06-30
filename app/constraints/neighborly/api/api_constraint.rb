@@ -1,9 +1,9 @@
 module Neighborly::Api
   class ApiConstraint
-    attr_reader :version
+    attr_reader :revision
 
     def initialize(options)
-      @version = options.fetch(:version)
+      @revision = options.fetch(:revision)
       @default = options[:default]
     end
 
@@ -11,7 +11,7 @@ module Neighborly::Api
       @default || request
         .headers
         .fetch(:accept)
-        .include?("version=#{version}")
+        .include?("revision=#{revision}")
     end
   end
 end
