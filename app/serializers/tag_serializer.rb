@@ -1,3 +1,10 @@
 class TagSerializer < ActiveModel::Serializer
-  attributes :id, :name, :visible
+  def total_projects
+    object.projects.size
+  end
+
+  attributes :id,
+    :name,
+    :total_projects,
+    :visible
 end

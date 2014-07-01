@@ -16,6 +16,8 @@ module Neighborly::Api
       ActionController::Serialization,
       ActionController::Instrumentation,
       ActionController::ParamsWrapper,
+      HasScope,
+      Neighborly::Api::Engine.routes.url_helpers,
 
       #ActionController::Helpers,
       #ActionController::UrlFor,
@@ -27,8 +29,6 @@ module Neighborly::Api
     MODULES.each do |mod|
       include mod
     end
-
-    include Neighborly::Api::Engine.routes.url_helpers
 
     before_action :check_authorization!
 

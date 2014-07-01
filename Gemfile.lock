@@ -30,7 +30,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-admin.git
-  revision: ed828560a3329ddff56528046c0eca76f5b3ab63
+  revision: 427df8d2688637f2ce08f5ff7ebb1c225e49e968
   branch: master
   specs:
     neighborly-admin (1.0.0)
@@ -38,7 +38,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-balanced-bankaccount.git
-  revision: 13cada4af31f10dae4c74d2d722ad5b8ab6e397b
+  revision: 0d780a5056b39e3dc7fd4706125fc92a12c0b6cb
   branch: master
   specs:
     neighborly-balanced-bankaccount (1.0.0)
@@ -97,6 +97,8 @@ PATH
   specs:
     neighborly-api (0.0.1)
       active_model_serializers
+      has_scope
+      kaminari
       rails (~> 4.0)
 
 GEM
