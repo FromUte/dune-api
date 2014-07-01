@@ -11,6 +11,7 @@ module Neighborly::Api
     include ActionController::Rendering
     include ActionController::StrongParameters
     include ActionController::ImplicitRender
+    include ActionController::Serialization
 
     #include ActionController::Helpers
     #include ActionController::UrlFor
@@ -31,6 +32,10 @@ module Neighborly::Api
 
     def current_user
       @current_user ||= access_token.user
+    end
+
+    def require_admin!
+      handle_unauthorized unless current_user.admin?
     end
 
     def check_authorization!
