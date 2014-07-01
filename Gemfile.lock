@@ -96,6 +96,7 @@ PATH
   remote: .
   specs:
     neighborly-api (0.0.1)
+      active_model_serializers
       rails (~> 4.0)
 
 GEM
