@@ -4,7 +4,8 @@ Neighborly::Api::Engine.routes.draw do
         defaults: { format: :json } do
 
     resources :projects
-    post   'sessions', to: 'sessions#create'
-    delete 'sessions', to: 'sessions#destroy'
+    get    'users/:id', to: 'users#show'
+    post   'sessions',  to: 'sessions#create'
+    delete 'sessions',  to: 'sessions#destroy'
   end
 end

@@ -17,6 +17,7 @@ module Neighborly::Api
     #include ActionController::Rescue
 
     include Neighborly::Api::Engine.routes.url_helpers
+    include ActionController::Serialization
 
     before_action :check_authorization!
 
