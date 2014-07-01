@@ -11,7 +11,7 @@ describe Neighborly::Api::V1::ProjectsController do
       #, {}, { 'Accept' => 'application/vnd.neighbor.ly; version=1' }
       json = JSON.parse(response.body)
 
-      expect(json.count).to eq(0)
+      expect(json.fetch('projects').count).to eq(0)
     end
   end
 end
