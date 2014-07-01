@@ -9,6 +9,8 @@ module Neighborly::Api
     include ActionController::Redirecting
     include ActionController::Renderers::All
     include ActionController::Rendering
+    include ActionController::StrongParameters
+    include ActionController::ImplicitRender
 
     #include ActionController::Helpers
     #include ActionController::UrlFor
