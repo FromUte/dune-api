@@ -59,6 +59,41 @@ Requires user to be an admin.
 
 
 ## Tags (/users)
+### List tags [GET]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {"tags"=>[{"id"=>1, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>2, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>3, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>4, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>5, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>6, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>7, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>8, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>9, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>10, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>11, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>12, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>13, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>14, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>15, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>16, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>17, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>18, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>19, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>20, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>21, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>22, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>23, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>24, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>25, "name"=>"cycling", "total_projects"=>0, "visible"=>true}], "meta"=>{"page"=>1, "total"=>30, "total_pages"=>2}}
+
+
++ Response 401 (application/json)
+
+        {}
+
+
+You can also provide a value for "popular" parameter. With "1", you will receive just popular tags.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {"tags"=>[{"id"=>1, "name"=>"cycling", "total_projects"=>22, "visible"=>true}], "meta"=>{"page"=>1, "total"=>10, "total_pages"=>1}}
+
+
 ### Create a tag [POST]
 
 + Request

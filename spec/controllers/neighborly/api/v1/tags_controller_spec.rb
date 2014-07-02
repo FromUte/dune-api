@@ -4,6 +4,64 @@ describe Neighborly::Api::V1::TagsController do
   routes { Neighborly::Api::Engine.routes }
   let(:parsed_response) { JSON.parse(response.body) }
 
+  describe '#index', authorized: true, admin: true do
+    let!(:tag)       { FactoryGirl.create(:tag) }
+    let(:do_request) { get :index, format: :json }
+
+    it 'responds with 200' do
+      do_request
+      expect(response.status).to eql(200)
+    end
+
+    it 'has a top level element called tags' do
+      do_request
+      expect(parsed_response.fetch('tags')).to be_a(Array)
+    end
+
+    it 'responds with data of tags' do
+      do_request
+      expect(
+        parsed_response.fetch('tags').first
+      ).to have_key('id')
+    end
+
+    describe 'filter by popular' do
+      let!(:popular) { FactoryGirl.create(:tag_popular) }
+
+      it 'accepts truthy popular parameter' do
+        get :index, format: :json, popular: '1'
+        response_ids = parsed_response.fetch('tags').map { |t| t['id'] }
+        expect(response_ids).to eql([popular.id])
+      end
+
+      it 'skip any filtering for popular when receiving falsy value' do
+        get :index, format: :json, popular: '0'
+        response_ids = parsed_response.fetch('tags').map { |t| t['id'] }
+        expect(response_ids).to eql(Tag.pluck(:id))
+      end
+    end
+
+    describe 'pagination' do
+      before do
+        FactoryGirl.create_list(:tag, 25)
+        do_request
+      end
+
+      it 'limits long collections' do
+        expect(
+          parsed_response.fetch('tags').size
+        ).to eql(25)
+      end
+
+      it 'responds with its meta information' do
+        meta = parsed_response.fetch('meta')
+        expect(meta['page']).to        eql(1)
+        expect(meta['total']).to       eql(26)
+        expect(meta['total_pages']).to eql(2)
+      end
+    end
+  end
+
   describe '#create', authorized: true, admin: true do
     let(:do_request) { post :create, tag: { name: 'foobar', visible: true } , format: :json }
 
