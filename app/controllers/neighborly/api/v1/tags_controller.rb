@@ -3,16 +3,12 @@ module Neighborly::Api
     class TagsController < BaseController
       before_action :require_admin!, except: %i(index show)
 
+      include PaginatedController
+
       has_scope :popular, type: :boolean
-      has_scope :page,    default: 1
 
       def index
-        collection = apply_scopes(Tag).all
-        render json: collection, meta: {
-          page:        collection.current_page,
-          total:       Tag.count,
-          total_pages: collection.total_pages
-        }
+        respond_with_pagination apply_scopes(Tag).all
       end
 
       def create

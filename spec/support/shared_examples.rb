@@ -65,3 +65,32 @@ RSpec.shared_examples 'checking admin authorization' do
     end
   end
 end
+
+RSpec.shared_examples 'paginating results' do
+  let(:resource_name) do
+    described_class.name.demodulize.sub('Controller', '').downcase
+  end
+
+  describe 'pagination' do
+    before do
+      FactoryGirl.create_list(
+        resource_name.singularize.to_sym,
+        25
+      )
+      do_request
+    end
+
+    it 'limits long collections' do
+      expect(
+        parsed_response.fetch(resource_name.pluralize).size
+      ).to eql(25)
+    end
+
+    it 'responds with its meta information' do
+      meta = parsed_response.fetch('meta')
+      expect(meta['page']).to        eql(1)
+      expect(meta['total']).to       eql(26)
+      expect(meta['total_pages']).to eql(2)
+    end
+  end
+end
