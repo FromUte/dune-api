@@ -4,13 +4,7 @@ module Neighborly::Api
       before_action :require_admin!
 
       def create
-        tag = Tag.new(permited_params)
-
-        if tag.save
-          render json: tag, status: :created
-        else
-          respond_with tag
-        end
+        respond_with Tag.create(permited_params)
       end
 
       private
