@@ -19,6 +19,10 @@ module Neighborly::Api
         respond_with Tag.create(permited_params)
       end
 
+      def update
+        respond_with Tag.update(params[:id], permited_params)
+      end
+
       private
 
       def permited_params

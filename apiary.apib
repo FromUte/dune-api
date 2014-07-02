@@ -124,3 +124,31 @@ You can also provide a value for "popular" parameter. With "1", you will receive
 
         {"errors":{"name":["has already been taken"]}}
 
+### Update a tag [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+            {"tag"=>{"name"=>"foobar-updated", "visible": true}}
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 422 (application/json)
+
+        {"errors":{"name":["has already been taken"]}}
+

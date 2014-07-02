@@ -38,4 +38,8 @@ FactoryGirl.define do
     email        { "person#{rand}@example.com" }
     confirmed_at { Time.now }
   end
+
+  factory :tag do
+    name { "subject-#{rand}" }
+  end
 end
