@@ -38,7 +38,7 @@ Your first stop when integrating with Neighborly. For a lot of endpoints, you ar
 # Users
 
 
-## Users [/users/:id]
+## User [/users/:id]
 ### Fetch user information [GET]
 
 + Request
@@ -54,8 +54,6 @@ Your first stop when integrating with Neighborly. For a lot of endpoints, you ar
         { "user": { "id": 34, "bio": null, "created_at": "2014-07-01T16:21:35+00:00", "display_image": "https://gravatar.com/avatar/7fc04373cf0c63e376baec602fec8f45.jpg?size=150&default=http://localhost/assets/default-avatars/5.png", "display_name": "Joãozinho", "email": "person0.9132588986740293@example.com", "facebook_url": null, "linkedin_url": null, "other_url": null, "profile_type": "personal", "twitter_url": null } ] }
 
 # Tags
-
-Requires user to be an admin.
 
 
 ## Tags (/users)
@@ -96,6 +94,8 @@ You can also provide a value for "popular" parameter. With "1", you will receive
 
 ### Create a tag [POST]
 
+Requires the user to be an admin.
+
 + Request
 
     + Header
@@ -123,4 +123,49 @@ You can also provide a value for "popular" parameter. With "1", you will receive
 + Response 422 (application/json)
 
         {"errors":{"name":["has already been taken"]}}
+
+### Update a tag [PUT]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+            {"tag"=>{"name"=>"foobar-updated", "visible": true}}
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 422 (application/json)
+
+        {"errors":{"name":["has already been taken"]}}
+
+## Tag [/tags/:id]
+### Fetch tag information [GET]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {"tag":{"id":310,"name":"foobar","visible":true}}
 

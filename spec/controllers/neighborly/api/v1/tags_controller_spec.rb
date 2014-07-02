@@ -4,7 +4,7 @@ describe Neighborly::Api::V1::TagsController do
   routes { Neighborly::Api::Engine.routes }
   let(:parsed_response) { JSON.parse(response.body) }
 
-  describe '#index', authorized: true, admin: true do
+  describe '#index', authorized: true do
     let!(:tag)       { FactoryGirl.create(:tag) }
     let(:do_request) { get :index, format: :json }
 
@@ -63,7 +63,7 @@ describe Neighborly::Api::V1::TagsController do
   end
 
   describe '#create', authorized: true, admin: true do
-    let(:do_request) { post :create, tag: { name: 'foobar', visible: true } , format: :json }
+    let(:do_request) { post :create, tag: { name: 'foobar', visible: true }, format: :json }
 
     context 'on success' do
       it 'returns a created http status' do
@@ -81,7 +81,7 @@ describe Neighborly::Api::V1::TagsController do
     end
 
     context 'on failure' do
-      let(:do_request) { post :create, tag: { } , format: :json }
+      let(:do_request) { post :create, tag: { }, format: :json }
 
       it 'returns a unprocessable entity http status' do
         do_request
@@ -94,6 +94,57 @@ describe Neighborly::Api::V1::TagsController do
         expect(parsed_response.count).to eq(1)
         expect(parsed_response['errors']['name']).not_to be_empty
       end
+    end
+  end
+
+  describe '#update', authorized: true, admin: true do
+    let!(:tag) { FactoryGirl.create(:tag) }
+
+    let(:do_request) do
+      put :update,
+          id: tag,
+          tag: { name: 'foobar', visible: true }, format: :json
+    end
+
+    context 'on success' do
+      it 'returns a no content http status' do
+        do_request
+        expect(response.status).to eq(204)
+      end
+    end
+
+    context 'on failure' do
+      let(:do_request) { put :update, id: tag, tag: { name: '' }, format: :json }
+
+      it 'returns a unprocessable entity http status' do
+        do_request
+        expect(response.status).to eq(422)
+      end
+
+      it 'returns a json with errors' do
+        do_request
+
+        expect(parsed_response.count).to eq(1)
+        expect(parsed_response['errors']['name']).not_to be_empty
+      end
+    end
+  end
+
+  describe '#show', authorized: true do
+    let!(:tag)       { FactoryGirl.create(:tag) }
+    let(:do_request) { get :show, id: tag, format: :json }
+
+    it 'returns a success http status' do
+      do_request
+      expect(response.status).to eq(200)
+    end
+
+    it 'returns a json' do
+      do_request
+
+      expect(parsed_response.count).to eq(1)
+      expect(parsed_response['tag']['name']).to eq(tag.name)
+      expect(parsed_response['tag']['visible']).to eq(tag.visible)
     end
   end
 end

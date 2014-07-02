@@ -1,7 +1,7 @@
 module Neighborly::Api
   module V1
     class TagsController < BaseController
-      before_action :require_admin!
+      before_action :require_admin!, except: %i(index show)
 
       has_scope :popular, type: :boolean
       has_scope :page,    default: 1
@@ -17,6 +17,14 @@ module Neighborly::Api
 
       def create
         respond_with Tag.create(permited_params)
+      end
+
+      def update
+        respond_with Tag.update(params[:id], permited_params)
+      end
+
+      def show
+        respond_with Tag.find(params[:id])
       end
 
       private
