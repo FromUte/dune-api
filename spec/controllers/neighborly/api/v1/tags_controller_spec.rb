@@ -25,6 +25,8 @@ describe Neighborly::Api::V1::TagsController do
       ).to have_key('id')
     end
 
+    it_behaves_like 'paginating results'
+
     describe 'filter by popular' do
       let!(:popular) { FactoryGirl.create(:tag_popular) }
 
@@ -38,26 +40,6 @@ describe Neighborly::Api::V1::TagsController do
         get :index, format: :json, popular: '0'
         response_ids = parsed_response.fetch('tags').map { |t| t['id'] }
         expect(response_ids).to eql(Tag.pluck(:id))
-      end
-    end
-
-    describe 'pagination' do
-      before do
-        FactoryGirl.create_list(:tag, 25)
-        do_request
-      end
-
-      it 'limits long collections' do
-        expect(
-          parsed_response.fetch('tags').size
-        ).to eql(25)
-      end
-
-      it 'responds with its meta information' do
-        meta = parsed_response.fetch('meta')
-        expect(meta['page']).to        eql(1)
-        expect(meta['total']).to       eql(26)
-        expect(meta['total_pages']).to eql(2)
       end
     end
   end
