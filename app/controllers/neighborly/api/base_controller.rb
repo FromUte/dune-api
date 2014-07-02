@@ -1,23 +1,34 @@
 module Neighborly::Api
   class BaseController < ActionController::Metal
-    include AbstractController::Rendering
-    include ActionController::ConditionalGet
-    include ActionController::ForceSSL
-    include ActionController::HttpAuthentication::Token::ControllerMethods
-    include ActionController::Instrumentation
-    include ActionController::MimeResponds
-    include ActionController::Redirecting
-    include ActionController::Renderers::All
-    include ActionController::Rendering
 
-    #include ActionController::Helpers
-    #include ActionController::UrlFor
-    #include ActionController::RackDelegation
-    #include AbstractController::Callbacks
-    #include ActionController::Rescue
+  MODULES = [
+      AbstractController::Rendering,
+      ActionController::Redirecting,
+      ActionView::Rendering, # This is needed because of respond_with
+      ActionController::Rendering,
+      ActionController::Renderers::All,
+      ActionController::ConditionalGet,
+      ActionController::MimeResponds,
+      ActionController::ImplicitRender,
+      ActionController::StrongParameters,
+      ActionController::ForceSSL,
+      ActionController::HttpAuthentication::Token::ControllerMethods,
+      ActionController::Serialization,
+      ActionController::Instrumentation,
+      ActionController::ParamsWrapper,
+
+      #ActionController::Helpers,
+      #ActionController::UrlFor,
+      #ActionController::RackDelegation,
+      #AbstractController::Callbacks,
+      #include ActionController::Rescue
+    ]
+
+    MODULES.each do |mod|
+      include mod
+    end
 
     include Neighborly::Api::Engine.routes.url_helpers
-    include ActionController::Serialization
 
     before_action :check_authorization!
 
@@ -29,6 +40,10 @@ module Neighborly::Api
 
     def current_user
       @current_user ||= access_token.user
+    end
+
+    def require_admin!
+      handle_unauthorized unless current_user.admin?
     end
 
     def check_authorization!
