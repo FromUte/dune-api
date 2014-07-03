@@ -129,4 +129,15 @@ describe Neighborly::Api::V1::TagsController do
       expect(parsed_response['tag']['visible']).to eq(tag.visible)
     end
   end
+
+  describe '#destroy', authorized: true, admin: true do
+    let!(:tag)       { FactoryGirl.create(:tag) }
+    let(:do_request) { delete :destroy, id: tag, format: :json }
+
+    it 'returns a success http status' do
+      do_request
+      expect(response.status).to eq(204)
+      expect { tag.reload }.to raise_error
+    end
+  end
 end
