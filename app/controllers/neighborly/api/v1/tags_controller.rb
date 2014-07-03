@@ -23,6 +23,10 @@ module Neighborly::Api
         respond_with Tag.find(params[:id])
       end
 
+      def destroy
+        respond_with Tag.destroy(params[:id])
+      end
+
       private
 
       def permited_params
