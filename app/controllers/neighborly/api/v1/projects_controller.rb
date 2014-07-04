@@ -1,9 +1,21 @@
 module Neighborly::Api
   module V1
     class ProjectsController < Neighborly::Api::BaseController
+      include PaginatedController
+
       def index
-        online_projects = Project.with_state('online')
-        render json: online_projects
+        respond_with_pagination apply_scopes(scoped_by_state).all
+      end
+
+      private
+
+      def scoped_by_state
+        state_scopes = params.slice(*Project.state_names).keys
+        if state_scopes.any?
+          Project.with_state(state_scopes)
+        else
+          Project
+        end
       end
     end
   end
