@@ -6,12 +6,20 @@ class UserSerializer < ActiveModel::Serializer
   attributes :id,
     :bio,
     :created_at,
-    :display_image,
-    :display_name,
     :email,
     :facebook_url,
     :linkedin_url,
     :other_url,
     :profile_type,
-    :twitter_url
+    :twitter_url,
+    :name,
+    :image_url
+
+  def name
+    object.display_name
+  end
+
+  def image_url
+    object.display_image
+  end
 end
