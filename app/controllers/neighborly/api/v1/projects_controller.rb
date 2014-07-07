@@ -3,6 +3,8 @@ module Neighborly::Api
     class ProjectsController < Neighborly::Api::BaseController
       include PaginatedController
 
+      has_scope :by_category_id, :order_by
+
       def index
         respond_with_pagination apply_scopes(scoped_by_state).all
       end

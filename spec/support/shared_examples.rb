@@ -73,6 +73,7 @@ RSpec.shared_examples 'paginating results' do
 
   describe 'pagination' do
     before do
+      Notification.delete_all
       resource_name.singularize.constantize.delete_all
       FactoryGirl.create_list(
         resource_name.downcase.singularize.to_sym,
