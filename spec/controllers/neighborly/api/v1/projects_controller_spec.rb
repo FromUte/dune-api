@@ -27,6 +27,13 @@ describe Neighborly::Api::V1::ProjectsController do
       end
     end
 
+    it 'filters by query' do
+      FactoryGirl.create(:project, name: 'Ordinary project')
+      project = FactoryGirl.create(:project, name: 'Wonderful project')
+      get :index, format: :json, query: 'wonderful'
+      expect(projects_returned).to eql([project.id])
+    end
+
     describe 'filter by state' do
       let!(:draft_project) { FactoryGirl.create(:project, state: :draft) }
 
