@@ -5,6 +5,7 @@ module Neighborly
 
       config.to_prepare do
         ::User.send(:include, Neighborly::Api::UserConcern)
+        ::Project.send(:include, Neighborly::Api::ProjectConcern)
       end
     end
   end
