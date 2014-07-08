@@ -13,6 +13,7 @@ FactoryGirl.define do
     headline 'attractive-headline'
     location 'New York, NY'
     name     'a-project'
+    state    :online
     user
     category
   end

@@ -35,11 +35,13 @@ describe Neighborly::Api::V1::ProjectsController do
     end
 
     describe 'filter by state' do
-      let!(:draft_project) { FactoryGirl.create(:project, state: :draft) }
+      let!(:draft_project) do
+        FactoryGirl.create(:project, state: :draft, user: user)
+      end
 
       Project.state_names.each do |state|
         it "filters by state #{state}" do
-          project      = FactoryGirl.create(:project, state: state)
+          project      = FactoryGirl.create(:project, state: state, user: user)
           expected_ids = if state.eql?(:draft)
             [project.id, draft_project.id]
           else
@@ -122,6 +124,12 @@ describe Neighborly::Api::V1::ProjectsController do
           }
         expect(projects_returned).to eql([project.id])
       end
+    end
+
+    it 'checks permissions' do
+      project = FactoryGirl.create(:project, state: :draft)
+      do_request
+      expect(projects_returned).to_not include(project.id)
     end
   end
 end

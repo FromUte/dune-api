@@ -18,6 +18,7 @@ module Neighborly::Api
       ActionController::ParamsWrapper,
       HasScope,
       Neighborly::Api::Engine.routes.url_helpers,
+      Pundit,
 
       #ActionController::Helpers,
       #ActionController::UrlFor,

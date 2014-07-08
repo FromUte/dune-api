@@ -12,17 +12,24 @@ module Neighborly::Api
         type:  :hash
 
       def index
-        respond_with_pagination apply_scopes(scoped_by_state).all
+        respond_with_pagination collection
       end
 
       private
 
-      def scoped_by_state
+      def collection
+        @collection ||= begin
+          authorized_scope = policy_scope(Project)
+          apply_scopes(scoped_by_state(authorized_scope)).all
+        end
+      end
+
+      def scoped_by_state(scope)
         state_scopes = params.slice(*Project.state_names).keys
         if state_scopes.any?
-          Project.with_state(state_scopes)
+          scope.with_state(state_scopes)
         else
-          Project
+          scope
         end
       end
     end
