@@ -16,23 +16,29 @@ module Neighborly::Api
       ActionController::Serialization,
       ActionController::Instrumentation,
       ActionController::ParamsWrapper,
+      ActionController::Rescue,
       HasScope,
+      Pundit,
       Neighborly::Api::Engine.routes.url_helpers,
 
       #ActionController::Helpers,
       #ActionController::UrlFor,
       #ActionController::RackDelegation,
       #AbstractController::Callbacks,
-      #include ActionController::Rescue
     ]
 
     MODULES.each do |mod|
       include mod
     end
 
+    respond_to :json
     before_action :check_authorization!
 
-    respond_to :json
+    rescue_from Pundit::NotAuthorizedError,  with: :handle_forbidden
+
+    def handle_forbidden
+      head :forbidden
+    end
 
     def access_token
       @access_token
