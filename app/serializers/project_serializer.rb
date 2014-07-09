@@ -1,4 +1,6 @@
 class ProjectSerializer < ActiveModel::Serializer
+  has_one :user
+
   def created_at
     object.created_at.to_datetime.utc.rfc3339
   end
@@ -51,7 +53,6 @@ class ProjectSerializer < ActiveModel::Serializer
     :terms,
     :terms_html,
     :uploaded_image,
-    :user_id,
     :video_embed_url,
     :video_thumbnail,
     :video_url
