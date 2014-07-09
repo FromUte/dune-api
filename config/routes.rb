@@ -3,7 +3,15 @@ Neighborly::Api::Engine.routes.draw do
         constraints: Neighborly::Api::ApiConstraint.new(revision: 1, default: true),
         defaults: { format: :json } do
 
-    resources :projects
+    resources :projects do
+      member do
+        put :approve
+        put :launch
+        put :reject
+        put :push_to_draft
+      end
+    end
+
     resources :tags
 
     get    'users/:id', to: 'users#show'

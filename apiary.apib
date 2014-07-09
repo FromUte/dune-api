@@ -194,3 +194,99 @@ Requires the user to be an admin.
 
 + Response 403 (application/json)
 
+## Approve a Project [/project/{id}/approve]
+
+### Change the project state to soon [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+
+## Launch a Project [/project/{id}/launch]
+
+### Change the project state to online [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+
+## Reject a Project [/project/{id}/reject]
+
+### Change the project state to rejected [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+
+## Push a Project to Draft [/project/{id}/push_to_draft]
+
+### Change the project state to draft [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+

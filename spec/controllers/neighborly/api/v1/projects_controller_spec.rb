@@ -37,4 +37,27 @@ describe Neighborly::Api::V1::ProjectsController do
       end
     end
   end
+
+  [:approve, :launch, :reject, :push_to_draft].each do |name|
+    describe "#{name}", authorized: true do
+      let(:user)       { FactoryGirl.create(:user, admin: true) }
+      let(:project)    { FactoryGirl.create(:project) }
+      let(:do_request) { put name, id: project.id, format: :json }
+
+      it 'returns a success http status' do
+        do_request
+        expect(response.status).to eq(204)
+      end
+
+      it 'authorizes the resource' do
+        expect(controller).to receive(:authorize).with(project)
+        do_request
+      end
+
+      it 'calls the state machine helper to change the state' do
+        expect_any_instance_of(Project).to receive("#{name}!")
+        do_request
+      end
+    end
+  end
 end
