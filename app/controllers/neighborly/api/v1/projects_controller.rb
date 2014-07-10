@@ -13,6 +13,16 @@ module Neighborly::Api
         project.push_to_trash!
         head :no_content
       end
+
+      [:approve, :launch, :reject, :push_to_draft].each do |name|
+        define_method name do
+          project = Project.find(params[:id])
+          authorize project
+
+          project.send("#{name.to_s}!")
+          head :no_content
+        end
+      end
     end
   end
 end
