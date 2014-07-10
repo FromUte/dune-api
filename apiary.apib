@@ -170,9 +170,38 @@ Requires the user to be an admin.
 
 ## Project [/project/{id}]
 
+### Update a project [PUT]
+
+Some atributes may not be saved, it will depends from the user access rights.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+            {"project"=>{"name"=>"Foo Bar Project Updated"}}
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 422 (application/json)
+
+        {"errors":{"name":["can't be blank"]]}}
+
++ Response 403 (application/json)
 
 ### Push project to trash [DELETE]
-
 
 + Request
 

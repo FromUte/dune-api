@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Neighborly::Api::V1::ProjectsController do
   routes { Neighborly::Api::Engine.routes }
+  let(:parsed_response) { JSON.parse(response.body) }
 
   describe '#index', authorized: true do
     let(:do_request) { get :index, format: :json }
@@ -12,6 +13,69 @@ describe Neighborly::Api::V1::ProjectsController do
       json = JSON.parse(response.body)
 
       expect(json.fetch('projects').count).to eq(0)
+    end
+  end
+
+  describe '#update', authorized: true do
+    let(:project) { FactoryGirl.create(:project, user: user) }
+
+    let(:do_request) do
+      put :update,
+          id: project.id,
+          project: { name: 'Foo Bar Updated' },
+          format: :json
+    end
+
+    context 'when user has access to the project' do
+      it 'updates the record' do
+        expect(Project).to receive(:update)
+          .with(project.id.to_s, { "name" => 'Foo Bar Updated' })
+
+        do_request
+      end
+
+      context 'on success' do
+        it 'returns a no content http status' do
+          do_request
+          expect(response.status).to eq(204)
+        end
+      end
+
+      context 'on failure' do
+        let(:do_request) do
+          put :update,
+              id: project.id,
+              project: { name: '' },
+              format: :json
+        end
+
+        it 'returns a unprocessable entity http status' do
+          do_request
+          expect(response.status).to eq(422)
+        end
+
+        it 'returns a json with errors' do
+          do_request
+
+          expect(parsed_response.count).to eq(1)
+          expect(parsed_response['errors']['name']).not_to be_empty
+        end
+      end
+    end
+
+    context 'when user does not have access to the project' do
+      let(:project) { FactoryGirl.create(:project) }
+
+      it 'does not update the record' do
+        expect(Project).not_to receive(:update)
+        do_request
+      end
+
+      it 'returns a forbidden http status' do
+        do_request
+        expect(response.status).to eq(403)
+        expect(project.reload.deleted?).to be_falsy
+      end
     end
   end
 
