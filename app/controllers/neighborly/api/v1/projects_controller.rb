@@ -3,7 +3,7 @@ module Neighborly::Api
     class ProjectsController < Neighborly::Api::BaseController
       include PaginatedController
 
-      has_scope :by_category_id, :order_by
+      has_scope :order_by
       has_scope :pg_search, as: :query
       has_scope :between_created_at,
         :between_expires_at,
