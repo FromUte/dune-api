@@ -13,7 +13,8 @@ class UserSerializer < ActiveModel::Serializer
     :profile_type,
     :twitter_url,
     :name,
-    :image_url
+    :image_url,
+    :admin
 
   def name
     object.display_name
