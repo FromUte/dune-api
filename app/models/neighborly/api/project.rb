@@ -1,7 +1,8 @@
-module Neighborly::Api::ProjectConcern
-  extend ActiveSupport::Concern
+module Neighborly::Api
+  ProjectPolicy        = ::ProjectPolicy
+  ProjectPolicy::Scope = ::ProjectPolicy::Scope
 
-  included do
+  class Project < ::Project
     %i(created_at expires_at online_date).each do |name|
       # class << self
       #   def between_created_at(starts_at, ends_at)
