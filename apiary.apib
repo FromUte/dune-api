@@ -28,11 +28,9 @@ Here you will find how to integrate an application with Neighbor.ly. Check our [
 
         {}
 
-
 + Response 401 (application/json)
 
         {}
-
 
 ## User [/users/{id}]
 ### Fetch user information [GET]
@@ -161,7 +159,6 @@ You can also provide a value for "popular" parameter. With "1", you will receive
 
         {}
 
-
 ### Create a tag [POST]
 
 Requires the user to be an admin.
@@ -184,7 +181,6 @@ Requires the user to be an admin.
 + Response 400 (application/json)
 
         {}
-
 
 + Response 401 (application/json)
 
@@ -217,7 +213,6 @@ Requires the user to be an admin.
 
         {}
 
-
 + Response 401 (application/json)
 
         {}
@@ -241,7 +236,7 @@ Requires the user to be an admin.
 
         {"tag":{"id":310,"name":"foobar","visible":true}}
 
-### Destroy a tag [PUT]
+### Destroy a tag [DELETE]
 
 Requires the user to be an admin.
 
@@ -259,7 +254,158 @@ Requires the user to be an admin.
 
         {}
 
++ Response 401 (application/json)
+
+        {}
+
+## Project [/project/{id}]
+
+### Update a project [PUT]
+
+Some atributes may not be saved, it will depends from the user access rights.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+            {"project"=>{"name"=>"Foo Bar Project Updated"}}
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
 
 + Response 401 (application/json)
 
         {}
+
++ Response 422 (application/json)
+
+        {"errors":{"name":["can't be blank"]]}}
+
++ Response 403 (application/json)
+
+### Push project to trash [DELETE]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+
+## Approve a Project [/project/{id}/approve]
+
+### Change the project state to soon [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+
+## Launch a Project [/project/{id}/launch]
+
+### Change the project state to online [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+
+## Reject a Project [/project/{id}/reject]
+
+### Change the project state to rejected [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+
+## Push a Project to Draft [/project/{id}/push_to_draft]
+
+### Change the project state to draft [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+

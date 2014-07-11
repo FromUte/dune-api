@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency             'has_scope'
   spec.add_dependency             'kaminari'
+  spec.add_dependency             'pundit'
   spec.add_dependency             'rails',       '~> 4.0'
   spec.add_dependency             'active_model_serializers'
   spec.add_development_dependency 'rake',        '~> 10.3'

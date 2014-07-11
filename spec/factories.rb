@@ -7,7 +7,7 @@ FactoryGirl.define do
     name_pt { "category-#{rand}" }
   end
 
-  factory :project do
+  factory :project, class: 'Neighborly::Api::Project' do
     about    'a-big-text-about-the-project'
     goal     10_000
     headline 'attractive-headline'
