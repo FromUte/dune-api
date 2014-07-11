@@ -68,21 +68,23 @@ end
 
 RSpec.shared_examples 'paginating results' do
   let(:resource_name) do
-    described_class.name.demodulize.sub('Controller', '').downcase
+    described_class.name.demodulize.sub('Controller', '')
   end
 
   describe 'pagination' do
     before do
+      Notification.delete_all
+      resource_name.singularize.constantize.delete_all
       FactoryGirl.create_list(
-        resource_name.singularize.to_sym,
-        25
+        resource_name.downcase.singularize.to_sym,
+        26
       )
       do_request
     end
 
     it 'limits long collections' do
       expect(
-        parsed_response.fetch(resource_name.pluralize).size
+        parsed_response.fetch(resource_name.downcase.pluralize).size
       ).to eql(25)
     end
 

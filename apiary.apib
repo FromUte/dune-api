@@ -47,6 +47,96 @@ Here you will find how to integrate an application with Neighbor.ly. Check our [
 
         { "user": { "id": 34, "bio": null, "created_at": "2014-07-01T16:21:35+00:00", "image_url": "https://gravatar.com/avatar/7fc04373cf0c63e376baec602fec8f45.jpg?size=150&default=http://localhost/assets/default-avatars/5.png", "name": "Joãozinho", "email": "person0.9132588986740293@example.com", "facebook_url": null, "linkedin_url": null, "other_url": null, "profile_type": "personal", "twitter_url": null } ] }
 
+
+## Projects [/projects]
+### List projects [GET]
+
+`order_by`, `query`, `by_category_id`, `between_created_at`, `between_expires_at` and `between_online_date` parameters are non mandatory.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+            { "order_by": "name asc" }
+
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+            { "between_created_at": { "starts_at": "2014-10-13", "ends_at": "2014-10-15" } }
+
+
++ Response 200 (application/json)
+
+        {"projects"=>
+          [{"id"=>2002,
+            "about"=>"a-big-text-about-the-project",
+            "about_html"=>"<p>a-big-text-about-the-project</p>\n",
+            "address_city"=>"New York",
+            "address_neighborhood"=>nil,
+            "address_state"=>"NY",
+            "address_zip_code"=>nil,
+            "budget"=>nil,
+            "budget_html"=>nil,
+            "campaign_type"=>"flexible",
+            "category_id"=>2020,
+            "created_at"=>"2014-07-07T14:25:08+00:00",
+            "expires_at"=>nil,
+            "featured"=>false,
+            "goal"=>"10000.0",
+            "hash_tag"=>nil,
+            "headline"=>"attractive-headline",
+            "hero_image"=>{"hero_image"=>{"url"=>nil, "blur"=>{"url"=>nil}}},
+            "home_page"=>nil,
+            "more_links"=>nil,
+            "name"=>"Wonderful project",
+            "online_date"=>nil,
+            "online_days"=>0,
+            "organization_type"=>nil,
+            "permalink"=>"wonderful-project",
+            "pledged"=>"0.0",
+            "recommended"=>false,
+            "short_url"=>nil,
+            "site"=>nil,
+            "state"=>"draft",
+            "street_address"=>nil,"terms"=>nil,
+            "terms_html"=>nil,
+            "uploaded_image"=>
+             {"uploaded_image"=>
+               {"url"=>nil,
+                "project_thumb"=>{"url"=>nil},
+                "project_thumb_small"=>{"url"=>nil},
+                "project_thumb_large"=>{"url"=>nil},
+                "project_thumb_facebook"=>{"url"=>nil}}},
+            "user_id"=>3268,
+            "video_embed_url"=>nil,
+            "video_thumbnail"=>
+             {"video_thumbnail"=>
+               {"url"=>nil,
+                "project_thumb"=>{"url"=>nil},
+                "project_thumb_small"=>{"url"=>nil},
+                "project_thumb_large"=>{"url"=>nil},
+                "project_thumb_facebook"=>{"url"=>nil}}},
+            "video_url"=>nil}],
+         "meta"=>{"page"=>1, "total"=>1, "total_pages"=>1}}
+
+
++ Response 401 (application/json)
+
+        {}
+
+
 ## Tags [/tags]
 ### List tags [GET]
 

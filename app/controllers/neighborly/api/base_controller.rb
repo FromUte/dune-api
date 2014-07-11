@@ -20,6 +20,7 @@ module Neighborly::Api
       HasScope,
       Pundit,
       Neighborly::Api::Engine.routes.url_helpers,
+      Pundit,
 
       #ActionController::Helpers,
       #ActionController::UrlFor,
