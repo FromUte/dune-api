@@ -3,7 +3,7 @@
 
 ## UNDER ACTIVE DEVELOPMENT
 
-We still in development phase, so, if you use it in production, you may have some seriously bugs there. :D
+We still in development phase, so, if you use it in production, you may have some bugs. :D If you do, please report them.
 
 ## What
 
