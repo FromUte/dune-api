@@ -39,4 +39,11 @@ FactoryGirl.define do
     email        { "person#{rand}@example.com" }
     confirmed_at { Time.now }
   end
+
+  factory :channel do
+    user { create(:user, profile_type: 'channel') }
+    name 'Test'
+    description 'Lorem Ipsum'
+    sequence(:permalink) { |n| "#{n}-test-page" }
+  end
 end

@@ -409,3 +409,18 @@ Some atributes may not be saved, it will depends from the user access rights.
 
 + Response 403 (application/json)
 
+## Channel [/channels/{id}]
+### Fetch a channel information [GET]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        { "channel"=>{"id"=>52, "name"=>"Test", "description"=>"Lorem Ipsum", "permalink"=>"3-test-page", "created_at"=>"2014-07-15T06:35:03.389-05:00", "updated_at"=>"2014-07-15T06:35:03.389-05:00", "image"=>{"image"=>{"url"=>nil, "thumb"=>{"url"=>nil}, "large"=>{"url"=>nil}, "x_large"=>{"url"=>nil}}}, "video_embed_url"=>nil, "video_url"=>nil, "how_it_works"=>nil, "how_it_works_html"=>nil, "terms_url"=>"http://test.host/terms", "state"=>"draft", "user_id"=>3432, "accepts_projects"=>true, "submit_your_project_text"=>nil, "submit_your_project_text_html"=>nil, "start_content"=>nil, "start_hero_image"=>{"start_hero_image"=>{"url"=>nil, "blur"=>{"url"=>nil}}}, "success_content"=>nil}} }
+
