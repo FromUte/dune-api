@@ -24,6 +24,16 @@ module Neighborly::Api
       object.last_channel.try(:id)
     end
 
+    def rights
+      {
+        can_approve: object.can_approve?,
+        can_launch: object.can_launch?,
+        can_reject: object.can_reject?,
+        can_push_to_draft: object.can_push_to_draft?,
+        can_push_to_trash: object.can_push_to_trash?
+      }
+    end
+
     attributes :id,
       :about,
       :about_html,
@@ -61,6 +71,7 @@ module Neighborly::Api
       :video_embed_url,
       :video_thumbnail,
       :video_url,
-      :channel_id
+      :channel_id,
+      :rights
   end
 end
