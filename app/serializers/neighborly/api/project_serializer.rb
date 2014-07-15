@@ -20,6 +20,10 @@ module Neighborly::Api
       end
     end
 
+    def channel_id
+      object.last_channel.try(:id)
+    end
+
     attributes :id,
       :about,
       :about_html,
@@ -56,6 +60,7 @@ module Neighborly::Api
       :uploaded_image,
       :video_embed_url,
       :video_thumbnail,
-      :video_url
+      :video_url,
+      :channel_id
   end
 end
