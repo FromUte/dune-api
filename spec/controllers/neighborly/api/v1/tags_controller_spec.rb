@@ -8,6 +8,8 @@ describe Neighborly::Api::V1::TagsController do
     let!(:tag)       { FactoryGirl.create(:tag) }
     let(:do_request) { get :index, format: :json }
 
+    it_behaves_like 'paginating results'
+
     it 'responds with 200' do
       do_request
       expect(response.status).to eql(200)
@@ -24,8 +26,6 @@ describe Neighborly::Api::V1::TagsController do
         parsed_response.fetch('tags').first
       ).to have_key('id')
     end
-
-    it_behaves_like 'paginating results'
 
     describe 'filter by popular' do
       let!(:popular) { FactoryGirl.create(:tag_popular) }
