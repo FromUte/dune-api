@@ -71,7 +71,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-dashboard.git
-  revision: 39f0d2261ca4cdd52d40bfbc22c655227e0a498f
+  revision: 117ab7c0c58b5ae19bd673c5332fd56120180139
   branch: master
   specs:
     neighborly-dashboard (0.0.1)

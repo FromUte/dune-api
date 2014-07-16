@@ -3,6 +3,26 @@ class UserSerializer < ActiveModel::Serializer
     object.created_at.to_datetime.utc.rfc3339
   end
 
+  def name
+    object.display_name
+  end
+
+  def image_url
+    object.display_image
+  end
+
+  def total_contributed
+    object.user_total ? object.user_total.sum : 0
+  end
+
+  def url
+    neighborly_api.user_url(object.id)
+  end
+
+  def html_url
+    main_app.user_url(object)
+  end
+
   attributes :id,
     :bio,
     :created_at,
@@ -14,13 +34,8 @@ class UserSerializer < ActiveModel::Serializer
     :twitter_url,
     :name,
     :image_url,
-    :admin
-
-  def name
-    object.display_name
-  end
-
-  def image_url
-    object.display_image
-  end
+    :total_contributed,
+    :admin,
+    :url,
+    :html_url
 end

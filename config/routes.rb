@@ -13,8 +13,8 @@ Neighborly::Api::Engine.routes.draw do
     end
 
     resources :tags
+    resources :users, only: %i(index show)
 
-    get    'users/:id',    to: 'users#show'
     get    'channels/:id', to: 'channels#show'
     post   'sessions',     to: 'sessions#create'
     delete 'sessions',     to: 'sessions#destroy'

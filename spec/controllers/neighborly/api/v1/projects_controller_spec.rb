@@ -21,9 +21,9 @@ describe Neighborly::Api::V1::ProjectsController do
       it 'order by given attribute' do
         get :index, format: :json, order_by: 'name desc'
         expected_projects = [
+          project.id,
           project_2.id,
-          project_1.id,
-          project.id
+          project_1.id
         ]
         expect(projects_returned).to eql(expected_projects)
       end
