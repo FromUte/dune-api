@@ -73,8 +73,6 @@ RSpec.shared_examples 'paginating results' do
 
   describe 'pagination' do
     before do
-      Notification.delete_all
-      resource_name.singularize.constantize.delete_all
       FactoryGirl.create_list(
         resource_name.downcase.singularize.to_sym,
         26
@@ -91,7 +89,7 @@ RSpec.shared_examples 'paginating results' do
     it 'responds with its meta information' do
       meta = parsed_response.fetch('meta')
       expect(meta['page']).to        eql(1)
-      expect(meta['total']).to       eql(26)
+      expect(meta['total']).to       eql(27)
       expect(meta['total_pages']).to eql(2)
     end
   end

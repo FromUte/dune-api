@@ -12,7 +12,7 @@ FactoryGirl.define do
     goal     10_000
     headline 'attractive-headline'
     location 'New York, NY'
-    name     'a-project'
+    name     'z-project'
     state    :online
     user
     category

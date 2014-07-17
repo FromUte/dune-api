@@ -9,6 +9,7 @@ describe Neighborly::Api::V1::ProjectsController do
   let(:parsed_response) { JSON.parse(response.body) }
 
   describe '#index', authorized: true do
+    let!(:project)   { FactoryGirl.create(:project) }
     let(:do_request) { get :index, format: :json }
 
     it_behaves_like 'paginating results'
@@ -20,6 +21,7 @@ describe Neighborly::Api::V1::ProjectsController do
       it 'order by given attribute' do
         get :index, format: :json, order_by: 'name desc'
         expected_projects = [
+          project.id,
           project_2.id,
           project_1.id
         ]
