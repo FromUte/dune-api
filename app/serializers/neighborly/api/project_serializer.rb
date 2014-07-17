@@ -34,6 +34,14 @@ module Neighborly::Api
       }
     end
 
+    def url
+      neighborly_api.project_url(object.id)
+    end
+
+    def html_url
+      main_app.project_url(object)
+    end
+
     attributes :id,
       :about,
       :about_html,
@@ -72,6 +80,8 @@ module Neighborly::Api
       :video_thumbnail,
       :video_url,
       :channel_id,
-      :rights
+      :rights,
+      :url,
+      :html_url
   end
 end
