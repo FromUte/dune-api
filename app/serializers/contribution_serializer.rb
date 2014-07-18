@@ -1,4 +1,16 @@
 class ContributionSerializer < ActiveModel::Serializer
+  def rights
+    {
+      can_pendent: object.can_pendent?,
+      can_wait_confirmation: object.can_wait_confirmation?,
+      can_confirm: object.can_confirm?,
+      can_cancel: object.can_cancel?,
+      can_request_refund: object.can_request_refund?,
+      can_refund: object.can_refund?,
+      can_push_to_trash: object.can_push_to_trash?
+    }
+  end
+
   attributes :id,
     :project_id,
     :user_id,
@@ -12,9 +24,6 @@ class ContributionSerializer < ActiveModel::Serializer
     :payment_method,
     :payment_token,
     :payment_id,
-    :payer_name,
-    :payer_email,
-    :payer_document,
     :address_street,
     :address_number,
     :address_complement,
@@ -28,5 +37,6 @@ class ContributionSerializer < ActiveModel::Serializer
     :state,
     :short_note,
     :payment_service_fee_paid_by_user,
-    :matching_id
+    :matching_id,
+    :rights
 end
