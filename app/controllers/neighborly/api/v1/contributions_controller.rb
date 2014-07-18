@@ -1,0 +1,30 @@
+module Neighborly::Api
+  module V1
+    class ContributionsController < BaseController
+      include PaginatedController
+
+      #before_action :require_admin!, only: :index
+
+      def index
+        respond_with_pagination collection
+      end
+
+      private
+
+      def collection
+        @collection ||= begin
+          apply_scopes(scoped_by_state(Contribution)).order('created_at desc').all
+        end
+      end
+
+      def scoped_by_state(scope)
+        state_scopes = params.slice(*Contribution.state_names).keys
+        if state_scopes.any?
+          scope.with_state(state_scopes)
+        else
+          scope
+        end
+      end
+    end
+  end
+end

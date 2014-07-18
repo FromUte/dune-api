@@ -18,6 +18,15 @@ FactoryGirl.define do
     category
   end
 
+  factory :contribution do
+    project { create(:project, state: 'online') }
+    user
+    confirmed_at Time.now
+    value 10.00
+    state 'confirmed'
+    credits false
+  end
+
   factory :tag do
     name    { "subject-#{rand}" }
     visible true
