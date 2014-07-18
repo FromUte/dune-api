@@ -13,7 +13,7 @@ module Neighborly::Api
 
       def collection
         @collection ||= begin
-          apply_scopes(scoped_by_state(Contribution)).order('created_at desc').all
+          apply_scopes(scoped_by_state(Neighborly::Api::Contribution)).order('created_at desc').all
         end
       end
 
