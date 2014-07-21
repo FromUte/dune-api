@@ -3,7 +3,10 @@ module Neighborly::Api
     class ContributionsController < BaseController
       include PaginatedController
 
-      #before_action :require_admin!, only: :index
+      has_scope :pg_search, as: :query
+      has_scope :between_values,
+        using: %i(initial final),
+        type:  :hash
 
       def index
         respond_with_pagination collection
@@ -13,7 +16,9 @@ module Neighborly::Api
 
       def collection
         @collection ||= begin
-          apply_scopes(scoped_by_state(Neighborly::Api::Contribution)).order('created_at desc').all
+          apply_scopes(
+            scoped_by_state(Neighborly::Api::Contribution)
+          ).order('created_at desc').all
         end
       end
 
