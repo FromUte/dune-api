@@ -9,7 +9,7 @@ describe Neighborly::Api::V1::ContributionsController do
 
   let(:parsed_response) { JSON.parse(response.body) }
 
-  describe '#index', authorized: true do
+  describe '#index', authorized: true, admin: true do
     let!(:contribution)   { FactoryGirl.create(:contribution) }
     let(:do_request) { get :index, format: :json }
 

@@ -3,6 +3,8 @@ module Neighborly::Api
     class ContributionsController < BaseController
       include PaginatedController
 
+      before_action :require_admin!
+
       has_scope :pg_search, as: :query
       has_scope :between_values,
         using: %i(initial final),
