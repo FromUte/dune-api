@@ -10,5 +10,10 @@ describe Neighborly::Api::Contribution do
 
       expect(described_class.between_values(15, 20).size).to eq 2
     end
+
+    it 'removes comma and transform it to float' do
+      expect(described_class).to receive(:where).with('value between ? and ?', 1000.0, 2000.4)
+      described_class.between_values('1,000', '2,000.40')
+    end
   end
 end
