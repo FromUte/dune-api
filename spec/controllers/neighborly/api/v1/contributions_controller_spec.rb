@@ -59,4 +59,31 @@ describe Neighborly::Api::V1::ContributionsController do
       end
     end
   end
+
+
+  [:confirm, :pendent, :refund, :hide, :cancel].each do |name|
+    describe "#{name}", authorized: true, admin: true do
+      let(:user)         { FactoryGirl.create(:user, admin: true) }
+      let(:contribution) do
+        state = (name == :refund) ? 'confirmed' : 'deleted'
+        FactoryGirl.create(:contribution, state: state)
+      end
+      let(:do_request)   { put name, id: contribution.id, format: :json }
+
+      it 'returns a success http status' do
+        do_request
+        expect(response.status).to eq(204)
+      end
+
+      it 'authorizes the resource' do
+        expect(controller).to receive(:authorize).with(contribution)
+        do_request
+      end
+
+      it 'calls the state machine helper to change the state' do
+        expect_any_instance_of(Contribution).to receive("#{name}!")
+        do_request
+      end
+    end
+  end
 end

@@ -12,8 +12,17 @@ Neighborly::Api::Engine.routes.draw do
       end
     end
 
+    resources :contributions, only: %i(index) do
+      member do
+        put :confirm
+        put :pendent
+        put :refund
+        put :hide
+        put :cancel
+      end
+    end
+
     resources :tags
-    resources :contributions, only: %i(index)
     resources :users, only: %i(index show)
 
     get    'channels/:id', to: 'channels#show'
