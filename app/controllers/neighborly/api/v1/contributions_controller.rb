@@ -18,6 +18,12 @@ module Neighborly::Api
         respond_with Neighborly::Api::Contribution.find(params[:id])
       end
 
+      def update
+        @contribution = ::Contribution.find(params[:id])
+        authorize @contribution
+        respond_with ::Contribution.update(params[:id], permitted_params)
+      end
+
       [:confirm, :pendent, :refund, :hide, :cancel].each do |name|
         define_method name do
           contribution = ::Contribution.find(params[:id])
@@ -29,6 +35,10 @@ module Neighborly::Api
       end
 
       private
+
+      def permitted_params
+        params.permit(policy(@contribution || ::Contribution).permitted_attributes)[:contribution]
+      end
 
       def collection
         @collection ||= begin

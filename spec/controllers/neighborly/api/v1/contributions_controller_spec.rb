@@ -81,6 +81,49 @@ describe Neighborly::Api::V1::ContributionsController do
     end
   end
 
+  describe '#update', authorized: true, admin: true do
+    let(:do_request) do
+      put :update,
+          id: contribution.id,
+          contribution: { value: 15 },
+          format: :json
+    end
+
+    it 'updates the record' do
+      expect(::Contribution).to receive(:update)
+        .with(contribution.id.to_s, { 'value' => 15 })
+
+      do_request
+    end
+
+    context 'on success' do
+      it 'returns a no content http status' do
+        do_request
+        expect(response.status).to eq(204)
+      end
+    end
+
+    context 'on failure' do
+      let(:do_request) do
+        put :update,
+            id: contribution.id,
+            contribution: { value: 5 },
+            format: :json
+      end
+
+      it 'returns a unprocessable entity http status' do
+        do_request
+        expect(response.status).to eq(422)
+      end
+
+      it 'returns a json with errors' do
+        do_request
+
+        expect(parsed_response.count).to eq(1)
+        expect(parsed_response['errors']['value']).not_to be_empty
+      end
+    end
+  end
 
   [:confirm, :pendent, :refund, :hide, :cancel].each do |name|
     describe "#{name}", authorized: true, admin: true do
