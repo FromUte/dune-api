@@ -125,6 +125,16 @@ describe Neighborly::Api::V1::ContributionsController do
     end
   end
 
+  describe 'destroy', authorized: true, admin: true do
+    let(:do_request) { delete :destroy, id: contribution.id, format: :json }
+
+    it 'returns a success http status' do
+      do_request
+      expect(response.status).to eq(204)
+      expect(contribution.reload.deleted?).to be_truthy
+    end
+  end
+
   [:confirm, :pendent, :refund, :hide, :cancel].each do |name|
     describe "#{name}", authorized: true, admin: true do
       let(:user)         { FactoryGirl.create(:user, admin: true) }

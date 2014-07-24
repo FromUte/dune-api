@@ -24,6 +24,14 @@ module Neighborly::Api
         respond_with ::Contribution.update(params[:id], permitted_params)
       end
 
+      def destroy
+        contribution = ::Contribution.find(params[:id])
+        authorize contribution
+
+        contribution.push_to_trash!
+        head :no_content
+      end
+
       [:confirm, :pendent, :refund, :hide, :cancel].each do |name|
         define_method name do
           contribution = ::Contribution.find(params[:id])
