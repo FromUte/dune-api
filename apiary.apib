@@ -554,3 +554,232 @@ Requires the user to be an admin.
 
         {}
 
+## Manually Confirm a Contibution [/contribution/{id}/confirm]
+
+Requires the user to be an admin.
+
+### Change the contribution state to confirmed [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
+## Set a Contibution as Pending [/contribution/{id}/pendent]
+
+Requires the user to be an admin.
+
+### Change the contribution state to pending [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
+## Refund a Contribution [/contribution/{id}/refund]
+
+Requires the user to be an admin.
+
+### Change the contribution state to refunded [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
+
+## Hide a Contribution [/contribution/{id}/hide]
+
+Requires the user to be an admin.
+
+### Change the contribution state to refunded_and_canceled [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
+## Cancel a Contribution [/contribution/{id}/cancel]
+
+Requires the user to be an admin.
+
+### Change the contribution state to canceled [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+
+## Contribution [/contributions/{id}]
+
+Requires the user to be an admin.
+
+### Update a Contribution [PUT]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+            {"contribution"=>{"value"=>"10.0"}}
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 422 (application/json)
+
+        {"errors":{"value":["can't be blank"]}}
+
+
+### Fetch Contribution information [GET]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {
+          "contribution": {
+            "id":1714,
+            "project_id":62,
+            "user_id":1,
+            "reward_id":226,
+            "value":"25.0",
+            "confirmed_at":null,
+            "created_at":"2014-01-14T16:32:36.324-06:00",
+            "anonymous":false,
+            "key":"e624ea64c2a7fc85e15b70cdf9e83fc9",
+            "credits":false,
+            "payment_method":null,
+            "payment_token":null,
+            "payment_id":null,
+            "address_street":null,
+            "address_number":null,
+            "address_complement":null,
+            "address_neighborhood":null,
+            "address_zip_code":null,
+            "address_city":null,
+            "address_state":null,
+            "address_phone_number":null,
+            "payment_choice":null,
+            "payment_service_fee":"0.0",
+            "state":"deleted",
+            "short_note":"",
+            "payment_service_fee_paid_by_user":false,
+            "matching_id":null,
+            "rights":{
+              "can_pendent":true,
+              "can_wait_confirmation":false,
+              "can_confirm":true,
+              "can_cancel":true,
+              "can_request_refund":false,
+              "can_refund":false,
+              "can_push_to_trash":true
+            }
+          }
+        }
+
+### Destroy a Contribution [DELETE]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
