@@ -14,6 +14,16 @@ module Neighborly::Api
         respond_with_pagination collection
       end
 
+      [:confirm, :pendent, :refund, :hide, :cancel].each do |name|
+        define_method name do
+          contribution = ::Contribution.find(params[:id])
+          authorize contribution
+
+          contribution.send("#{name.to_s}!")
+          head :no_content
+        end
+      end
+
       private
 
       def collection
