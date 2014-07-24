@@ -474,3 +474,83 @@ Some atributes may not be saved, it will depends from the user access rights.
 
         { "channel"=>{"id"=>52, "name"=>"Test", "description"=>"Lorem Ipsum", "permalink"=>"3-test-page", "created_at"=>"2014-07-15T06:35:03.389-05:00", "updated_at"=>"2014-07-15T06:35:03.389-05:00", "image"=>{"image"=>{"url"=>nil, "thumb"=>{"url"=>nil}, "large"=>{"url"=>nil}, "x_large"=>{"url"=>nil}}}, "video_embed_url"=>nil, "video_url"=>nil, "how_it_works"=>nil, "how_it_works_html"=>nil, "terms_url"=>"http://test.host/terms", "state"=>"draft", "user_id"=>3432, "accepts_projects"=>true, "submit_your_project_text"=>nil, "submit_your_project_text_html"=>nil, "start_content"=>nil, "start_hero_image"=>{"start_hero_image"=>{"url"=>nil, "blur"=>{"url"=>nil}}}, "success_content"=>nil}} }
 
+## Contributions [/contributions]
+### List contributions [GET]
+
+Requires the user to be an admin.
+
+`query` and `between_values` parameters are non mandatory.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+            { "between_values": { "initial": "500.00", "final": "1000.00" } }
+
+
++ Response 200 (application/json)
+
+      {
+        "contributions":[
+          {
+            "id":1714,
+            "project_id":62,
+              "user_id":1,
+              "reward_id":226,
+              "value":"25.0",
+              "confirmed_at":null,
+              "created_at":"2014-01-14T16:32:36.324-06:00",
+              "anonymous":false,
+              "key":"e624ea64c2a7fc85e15b70cdf9e83fc9",
+              "credits":false,
+              "payment_method":null,
+              "payment_token":null,
+              "payment_id":null,
+              "address_street":null,
+              "address_number":null,
+              "address_complement":null,
+              "address_neighborhood":null,
+              "address_zip_code":null,
+              "address_city":null,
+              "address_state":null,
+              "address_phone_number":null,
+              "payment_choice":null,
+              "payment_service_fee":"0.0",
+              "state":"deleted",
+              "short_note":"",
+              "payment_service_fee_paid_by_user":false,
+              "matching_id":null,
+              "rights":{
+                "can_pendent":true,
+                "can_wait_confirmation":false,
+                "can_confirm":true,
+                "can_cancel":true,
+                "can_request_refund":false,
+                "can_refund":false,
+                "can_push_to_trash":true
+              }
+            }
+          ],
+          "meta":{
+            "page":1,
+            "total":1,
+            "total_pages":1
+          }
+        }
+
++ Response 401 (application/json)
+
+        {}
+
