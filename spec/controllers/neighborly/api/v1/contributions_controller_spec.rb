@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Neighborly::Api::V1::ContributionsController do
   routes { Neighborly::Api::Engine.routes }
+  let!(:contribution) { FactoryGirl.create(:contribution) }
 
   let(:contributions_returned) do
     parsed_response.fetch('contributions').map { |t| t['id'] }
@@ -10,16 +11,15 @@ describe Neighborly::Api::V1::ContributionsController do
   let(:parsed_response) { JSON.parse(response.body) }
 
   describe '#index', authorized: true, admin: true do
-    let!(:contribution)   { FactoryGirl.create(:contribution) }
     let(:do_request) { get :index, format: :json }
 
     it_behaves_like 'paginating results'
 
     it 'filters by query' do
-      project = FactoryGirl.create(:contribution, payment_method: 'balanced')
+      contribution = FactoryGirl.create(:contribution, payment_method: 'balanced')
       FactoryGirl.create(:contribution, payment_method: 'paypal')
       get :index, format: :json, query: 'balanced'
-      expect(contributions_returned).to eql([project.id])
+      expect(contributions_returned).to eql([contribution.id])
     end
 
     describe 'filtering by between_values' do
@@ -29,7 +29,7 @@ describe Neighborly::Api::V1::ContributionsController do
         FactoryGirl.create(:contribution, value: 40)
       end
 
-      it 'returns just those projects in the given range' do
+      it 'returns just those contributions in the given range' do
         get :index, format: :json,
           between_values: {
             initial: 30,
@@ -46,7 +46,7 @@ describe Neighborly::Api::V1::ContributionsController do
 
       Contribution.state_names.each do |state|
         it "filters by state #{state}" do
-          contribution      = FactoryGirl.create(:contribution, state: state)
+          contribution = FactoryGirl.create(:contribution, state: state)
           expected_ids = if state.eql?(:pending)
             [contribution.id, pending_contribution.id]
           else
@@ -57,6 +57,27 @@ describe Neighborly::Api::V1::ContributionsController do
           expect(contributions_returned).to include(*expected_ids)
         end
       end
+    end
+  end
+
+  describe '#show', authorized: true, admin: true do
+    let(:do_request) { get :show, id: contribution.id, format: :json }
+
+    it 'responds with 200' do
+      do_request
+      expect(response.status).to eql(200)
+    end
+
+    it 'has a top level element called contribution' do
+      do_request
+      expect(parsed_response.fetch('contribution')).to be_a(Hash)
+    end
+
+    it 'responds with data of the given contribution' do
+      do_request
+      expect(
+        parsed_response.fetch('contribution')
+      ).to have_key('id')
     end
   end
 

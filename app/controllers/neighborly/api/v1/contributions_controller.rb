@@ -14,6 +14,10 @@ module Neighborly::Api
         respond_with_pagination collection
       end
 
+      def show
+        respond_with Neighborly::Api::Contribution.find(params[:id])
+      end
+
       [:confirm, :pendent, :refund, :hide, :cancel].each do |name|
         define_method name do
           contribution = ::Contribution.find(params[:id])
