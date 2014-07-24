@@ -12,7 +12,7 @@ Neighborly::Api::Engine.routes.draw do
       end
     end
 
-    resources :contributions, only: %i(index) do
+    resources :contributions, only: %i(index show update destroy) do
       member do
         put :confirm
         put :pendent
