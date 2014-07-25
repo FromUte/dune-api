@@ -119,6 +119,39 @@ describe Neighborly::Api::V1::ProjectsController do
     end
   end
 
+  describe '#show', authorized: true do
+    let(:project)    { FactoryGirl.create(:project, user: user) }
+    let(:do_request) { get :show, id: project.id, format: :json }
+
+    context 'when user has access to the project' do
+      it 'responds with 200' do
+        do_request
+        expect(response.status).to eql(200)
+      end
+
+      it 'has a top level element called project' do
+        do_request
+        expect(parsed_response.fetch('project')).to be_a(Hash)
+      end
+
+      it 'responds with data of the given project' do
+        do_request
+        expect(
+          parsed_response.fetch('project')
+        ).to have_key('id')
+      end
+    end
+
+    context 'when user does not have access to the project' do
+      let(:project) { FactoryGirl.create(:project, state: 'draft') }
+
+      it 'returns a forbidden http status' do
+        do_request
+        expect(response.status).to eq(403)
+      end
+    end
+  end
+
   describe '#update', authorized: true do
     let(:project) { FactoryGirl.create(:project, user: user) }
 
