@@ -15,6 +15,12 @@ module Neighborly::Api
         respond_with_pagination collection
       end
 
+      def show
+        project = ::Project.find(params[:id])
+        authorize project
+        respond_with project, serializer: Neighborly::Api::ProjectSerializer
+      end
+
       def update
         @project = Project.find(params[:id])
         authorize @project

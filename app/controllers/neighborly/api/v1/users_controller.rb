@@ -11,8 +11,7 @@ module Neighborly::Api
       end
 
       def show
-        user = User.find(params[:id])
-        render json: user, root: :user
+        respond_with User.find(params[:id])
       end
 
       private
