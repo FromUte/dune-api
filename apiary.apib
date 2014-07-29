@@ -4,11 +4,37 @@ HOST: https://neighbor.ly/api/
 # Neighbor.ly
 Here you will find how to integrate an application with Neighbor.ly. Check our [Dashboard source code](https://github.com/neighborly/neighborly-dashboard) for a real use case.
 
+## Allowed HTTPs requests:
+
+  - `POST` - Creates or updates a resource
+  - `PUT` - Updates a resource
+  - `GET` - Retrieves a resource or list of resources
+  - `DELETE` - Delete a resource
+
+
+## Typical Server Responses
+
+  - `200` OK - The request was successful (some API calls may return 201 instead).
+  - `201` Created - The request was successful and a resource was created.
+  - `204` No Content - The request was successful but there is no representation to return (that is, the response is empty).
+  - `400` Bad Request - The request could not be understood or was missing required parameters.
+  - `401` Unauthorized - Authentication failed.
+  - `403` Forbidden - User does not have permissions for the requested operation.
+  - `404` Not Found - Resource was not found.
+  - `405` Method Not Allowed - Requested method is not supported for the specified resource.
+  - `422` Unprocessable Entity - The resource may contain validation errors.
+  - `503` Service Unavailable - The service is temporary unavailable (e.g. scheduled Platform Maintenance). Try again later.
+
 ## Sessions [/sessions]
 
-    Your first stop when integrating with Neighborly. For a lot of endpoints, you are expected to provide an `access_token`, managed by this section.
+    You must be authenticated to use the API, to authenticate you will need an access token.
 
-### Create a session [POST]
+### Create an access token [POST]
+
++ Parameters
+
+    + email (required, string) ... Your Neighbor.ly account email address
+    + password (required, string) ... Your Neighbor.ly account password
 
 + Request
 
@@ -18,11 +44,17 @@ Here you will find how to integrate an application with Neighbor.ly. Check our [
 
     + Body
 
-            { "email": "mr.nobody@example.com", "password": "your-really-strong-password" }
+            {
+              "email":"mr.nobody@example.com",
+              "password":"your-really-strong-password"
+            }
 
 + Response 201 (application/json)
 
-        { "access_token": "Ndf6kxgLfr_KMhAg8wMpm7Yit2cvHkv9oI8qIXWiHmZdeqI1h0cmn8p4wCEhoZS-AQY", "user_id": 1 }
+        {
+          "access_token":"Ndf6kxgLfr_KMhAg8wMpm7Yit2cvHkv9oI8qIXWiHmZdeqI1h0cmn8p4wCEhoZS-AQY",
+          "user_id":1
+        }
 
 + Response 400 (application/json)
 
@@ -32,7 +64,24 @@ Here you will find how to integrate an application with Neighbor.ly. Check our [
 
         {}
 
-## User [/users/{id}]
+### Destroy the access token [DELETE]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {}
+
+# Group Users
+
+## /users/{id}
+
 ### Fetch user information [GET]
 
 + Request
@@ -45,11 +94,29 @@ Here you will find how to integrate an application with Neighbor.ly. Check our [
 
 + Response 200 (application/json)
 
-        { "user": { "id": 34, "bio": null, "created_at": "2014-07-01T16:21:35+00:00", "image_url": "https://gravatar.com/avatar/7fc04373cf0c63e376baec602fec8f45.jpg?size=150&default=http://localhost/assets/default-avatars/5.png", "name": "Joãozinho", "email": "person0.9132588986740293@example.com", "facebook_url": null, "linkedin_url": null, "other_url": null, "profile_type": "personal", "twitter_url": null } ] }
+        {
+          "user":{
+            "id":18,
+            "bio":null,
+            "created_at":"2014-07-04T12:42:41+00:00",
+            "email":"camila@casperwaters.name",
+            "facebook_url":null,
+            "linkedin_url":null,
+            "other_url":null,
+            "profile_type":"personal",
+            "twitter_url":null,
+            "name":"Mrs. Abigayle Gaylord",
+            "image_url":"http://neighbor.ly/uploads/user/uploaded_image/18/thumb_avatar_image.jpg",
+            "total_contributed":"70.0",
+            "admin":false,
+            "url":"http://neighbor.ly/api/users/18",
+            "html_url":"http://neighbor.ly/neighbors/18-mrs-abigayle-gaylord"
+          }
+        }
 
 
+## /users
 
-## Users [/users]
 ### List users [GET]
 
 Requires the user to be an admin.
@@ -69,7 +136,7 @@ Requires the user to be an admin.
 
         {
           "users":[
-          {
+            {
               "id":18,
               "bio":null,
               "created_at":"2014-07-04T12:42:41+00:00",
@@ -98,10 +165,20 @@ Requires the user to be an admin.
 
         {}
 
-## Projects [/projects]
+# Group Projects
+
+## /projects
+
 ### List projects [GET]
 
-`order_by`, `query`, `by_category_id`, `between_created_at`, `between_expires_at` and `between_online_date` parameters are non mandatory.
++ Parameters
+
+    + order_by (optional, string) ... Order by specify field with direction e.g. `goal desc`
+    + query (optional, string) ... Search for projects
+    + by_category_id (optional, object) ... Filter by category id
+    + between_created_at (optional, object) ... Filter by between created at e.g. `{ "between_created_at": { "starts_at": "2014-10-13", "ends_at": "2014-10-15" } }`
+    + between_expires_at (optional, object) ... Filter by between expires at
+    + between_online_date (optional, object) ... Filter by between online date
 
 + Request
 
@@ -109,206 +186,129 @@ Requires the user to be an admin.
 
             Accept: application/vnd.api+json;revision=1
             Authorization: Token your-token-here
-
-    + Body
-
-            { "order_by": "name asc" }
-
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-    + Body
-
-            { "between_created_at": { "starts_at": "2014-10-13", "ends_at": "2014-10-15" } }
-
 
 + Response 200 (application/json)
 
-        {"projects"=>
-          [{"id"=>2002,
-            "about"=>"a-big-text-about-the-project",
-            "about_html"=>"<p>a-big-text-about-the-project</p>\n",
-            "address_city"=>"New York",
-            "address_neighborhood"=>nil,
-            "address_state"=>"NY",
-            "address_zip_code"=>nil,
-            "budget"=>nil,
-            "budget_html"=>nil,
-            "campaign_type"=>"flexible",
-            "category_id"=>2020,
-            "created_at"=>"2014-07-07T14:25:08+00:00",
-            "expires_at"=>nil,
-            "featured"=>false,
-            "goal"=>"10000.0",
-            "hash_tag"=>nil,
-            "headline"=>"attractive-headline",
-            "hero_image"=>{"hero_image"=>{"url"=>nil, "blur"=>{"url"=>nil}}},
-            "home_page"=>nil,
-            "more_links"=>nil,
-            "name"=>"Wonderful project",
-            "online_date"=>nil,
-            "online_days"=>0,
-            "organization_type"=>nil,
-            "permalink"=>"wonderful-project",
-            "pledged"=>"0.0",
-            "recommended"=>false,
-            "short_url"=>nil,
-            "site"=>nil,
-            "state"=>"draft",
-            "street_address"=>nil,"terms"=>nil,
-            "terms_html"=>nil,
-            "uploaded_image"=>
-             {"uploaded_image"=>
-               {"url"=>nil,
-                "project_thumb"=>{"url"=>nil},
-                "project_thumb_small"=>{"url"=>nil},
-                "project_thumb_large"=>{"url"=>nil},
-                "project_thumb_facebook"=>{"url"=>nil}}},
-            "user_id"=>3268,
-            "video_embed_url"=>nil,
-            "video_thumbnail"=>
-             {"video_thumbnail"=>
-               {"url"=>nil,
-                "project_thumb"=>{"url"=>nil},
-                "project_thumb_small"=>{"url"=>nil},
-                "project_thumb_large"=>{"url"=>nil},
-                "project_thumb_facebook"=>{"url"=>nil}}},
-            "video_url"=>nil}],
-         "meta"=>{"page"=>1, "total"=>1, "total_pages"=>1}}
-
-
-+ Response 401 (application/json)
-
-        {}
-
-
-## Tags [/tags]
-### List tags [GET]
-
-You can also provide a value for "popular" parameter. With "1", you will receive just popular tags.
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-
-+ Response 200 (application/json)
-
-        {"tags"=>[{"id"=>1, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>2, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>3, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>4, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>5, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>6, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>7, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>8, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>9, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>10, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>11, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>12, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>13, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>14, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>15, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>16, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>17, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>18, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>19, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>20, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>21, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>22, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>23, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>24, "name"=>"cycling", "total_projects"=>0, "visible"=>true}, {"id"=>25, "name"=>"cycling", "total_projects"=>0, "visible"=>true}], "meta"=>{"page"=>1, "total"=>30, "total_pages"=>2}}
-
-
-+ Response 401 (application/json)
-
-        {}
-
-### Create a tag [POST]
-
-Requires the user to be an admin.
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-    + Body
-
-            {"tag"=>{"name"=>"foobar", "visible": true}}
-
-+ Response 201 (application/json)
-
-        {"tag":{"id":310,"name":"foobar","visible":true}}
-
-+ Response 400 (application/json)
-
-        {}
-
-+ Response 401 (application/json)
-
-        {}
-
-+ Response 422 (application/json)
-
-        {"errors":{"name":["has already been taken"]}}
-
-## Tag [/tags/{id}]
-
-### Update a tag [PUT]
-
-Requires the user to be an admin.
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-    + Body
-
-            {"tag"=>{"name"=>"foobar-updated", "visible": true}}
-
-+ Response 204 (application/json)
-
-+ Response 400 (application/json)
-
-        {}
+        {
+          "projects":[
+            {
+              "id":18,
+              "about":"Sint odit autem non eaque asperiores esse eveniet omnis. Et explicabo praesentium eos dolor ut voluptas expedita. Laborum doloremque dicta voluptas fugiat dignissimos ut fugit deleniti. Dolorem neque et ut quis nemo. Nam et voluptatem quam ea et atque. Aut et ipsum veritatis cum. Eveniet consequuntur quod non quis. Sunt corrupti illum ipsum animi. Fugit ipsam facilis ipsum nisi autem alias. A est esse sed nemo tenetur non.",
+              "about_html":"\u003cp\u003eSint odit autem non eaque asperiores esse eveniet omnis. Et explicabo praesentium eos dolor ut voluptas expedita. Laborum doloremque dicta voluptas fugiat dignissimos ut fugit deleniti. Dolorem neque et ut quis nemo. Nam et voluptatem quam ea et atque. Aut et ipsum veritatis cum. Eveniet consequuntur quod non quis. Sunt corrupti illum ipsum animi. Fugit ipsam facilis ipsum nisi autem alias. A est esse sed nemo tenetur non.\u003c/p\u003e\n",
+              "address_city":"Markbury",
+              "address_neighborhood":"",
+              "address_state":"NC",
+              "address_zip_code":null,
+              "budget":"",
+              "budget_html":"",
+              "campaign_type":"flexible",
+              "category_id":8,
+              "created_at":"2014-07-04T16:47:29+00:00",
+              "expires_at":"2014-08-17T04:59:59+00:00",
+              "featured":true,
+              "goal":"100000.0",
+              "hash_tag":"",
+              "headline":"Et hic laboriosam voluptatibus accusantium velit dolor.",
+              "hero_image":{
+                "hero_image":{
+                  "url":"/uploads/neighborly/api/project/hero_image/18/image.jpg",
+                  "blur":{
+                    "url":"/uploads/neighborly/api/project/hero_image/18/blur_image.jpg"
+                  }
+                }
+              },
+              "home_page":true,
+              "more_links":null,
+              "name":"Quam soluta.",
+              "online_date":"2014-07-05T01:47:25+00:00",
+              "online_days":43,
+              "organization_type":null,
+              "permalink":"quam-soluta",
+              "pledged":"170.0",
+              "recommended":true,
+              "short_url":null,
+              "site":"",
+              "state":"online",
+              "street_address":null,
+              "terms":"",
+              "terms_html":"",
+              "uploaded_image":{
+                "uploaded_image":{
+                  "url":"/uploads/neighborly/api/project/uploaded_image/18/image.jpg",
+                  "project_thumb":{
+                    "url":"/uploads/neighborly/api/project/uploaded_image/18/project_thumb_image.jpg"
+                  },
+                  "project_thumb_small":{
+                    "url":"/uploads/neighborly/api/project/uploaded_image/18/project_thumb_small_image.jpg"
+                  },
+                  "project_thumb_large":{
+                    "url":"/uploads/neighborly/api/project/uploaded_image/18/project_thumb_large_image.jpg"
+                  },
+                  "project_thumb_facebook":{
+                    "url":"/uploads/neighborly/api/project/uploaded_image/18/project_thumb_facebook_image.jpg"
+                  }
+                }
+              },
+              "video_embed_url":null,
+              "video_thumbnail":{
+                "video_thumbnail":{
+                  "url":null,
+                  "project_thumb":{
+                    "url":null
+                  },
+                  "project_thumb_small":{
+                    "url":null
+                  },
+                  "project_thumb_large":{
+                    "url":null
+                  },
+                  "project_thumb_facebook":{
+                    "url":null
+                  }
+                }
+              },
+              "video_url":"http://vimeo.com/79833901",
+              "channel_id":null,
+              "rights":{
+                "can_approve":false,
+                "can_launch":false,
+                "can_reject":false,
+                "can_push_to_draft":true,
+                "can_push_to_trash":false
+              },
+              "url":"http://localhost:3000/api/projects/18",
+              "html_url":"http://localhost:3000/projects/quam-soluta",
+              "user":{
+                "id":5,
+                "bio":null,
+                "created_at":"2014-07-04T16:42:01+00:00",
+                "email":"org@org.com",
+                "facebook_url":null,
+                "linkedin_url":null,
+                "other_url":null,
+                "profile_type":"organization",
+                "twitter_url":null,
+                "name":"Organization Name",
+                "image_url":"/uploads/organization/image/1/large_image.jpg",
+                "total_contributed":0,
+                "admin":true,
+                "url":"http://localhost:3000/api/users/5",
+                "html_url":"http://localhost:3000/neighbors/5-organization-name"
+              }
+            }
+          ],
+          "meta":{
+            "page":1,
+            "total":1,
+            "total_pages":1
+          }
+        }
 
 + Response 401 (application/json)
 
         {}
 
-+ Response 422 (application/json)
-
-        {"errors":{"name":["has already been taken"]}}
-
-
-### Fetch tag information [GET]
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-
-+ Response 200 (application/json)
-
-        {"tag":{"id":310,"name":"foobar","visible":true}}
-
-### Destroy a tag [DELETE]
-
-Requires the user to be an admin.
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-
-+ Response 204 (application/json)
-
-+ Response 400 (application/json)
-
-        {}
-
-+ Response 401 (application/json)
-
-        {}
-
-## Project [/project/{id}]
+## /project/{id}
 
 ### Fetch Project informations [GET]
 
@@ -321,56 +321,113 @@ Requires the user to be an admin.
 
 + Response 200 (application/json)
 
-        {"project"=>
-          {"id"=>2002,
-            "about"=>"a-big-text-about-the-project",
-            "about_html"=>"<p>a-big-text-about-the-project</p>\n",
-            "address_city"=>"New York",
-            "address_neighborhood"=>nil,
-            "address_state"=>"NY",
-            "address_zip_code"=>nil,
-            "budget"=>nil,
-            "budget_html"=>nil,
-            "campaign_type"=>"flexible",
-            "category_id"=>2020,
-            "created_at"=>"2014-07-07T14:25:08+00:00",
-            "expires_at"=>nil,
-            "featured"=>false,
-            "goal"=>"10000.0",
-            "hash_tag"=>nil,
-            "headline"=>"attractive-headline",
-            "hero_image"=>{"hero_image"=>{"url"=>nil, "blur"=>{"url"=>nil}}},
-            "home_page"=>nil,
-            "more_links"=>nil,
-            "name"=>"Wonderful project",
-            "online_date"=>nil,
-            "online_days"=>0,
-            "organization_type"=>nil,
-            "permalink"=>"wonderful-project",
-            "pledged"=>"0.0",
-            "recommended"=>false,
-            "short_url"=>nil,
-            "site"=>nil,
-            "state"=>"draft",
-            "street_address"=>nil,"terms"=>nil,
-            "terms_html"=>nil,
-            "uploaded_image"=>
-             {"uploaded_image"=>
-               {"url"=>nil,
-                "project_thumb"=>{"url"=>nil},
-                "project_thumb_small"=>{"url"=>nil},
-                "project_thumb_large"=>{"url"=>nil},
-                "project_thumb_facebook"=>{"url"=>nil}}},
-            "user_id"=>3268,
-            "video_embed_url"=>nil,
-            "video_thumbnail"=>
-             {"video_thumbnail"=>
-               {"url"=>nil,
-                "project_thumb"=>{"url"=>nil},
-                "project_thumb_small"=>{"url"=>nil},
-                "project_thumb_large"=>{"url"=>nil},
-                "project_thumb_facebook"=>{"url"=>nil}}},
-            "video_url"=>nil}}
+        {
+          "project":{
+            "id":18,
+            "about":"Sint odit autem non eaque asperiores esse eveniet omnis. Et explicabo praesentium eos dolor ut voluptas expedita. Laborum doloremque dicta voluptas fugiat dignissimos ut fugit deleniti. Dolorem neque et ut quis nemo. Nam et voluptatem quam ea et atque. Aut et ipsum veritatis cum. Eveniet consequuntur quod non quis. Sunt corrupti illum ipsum animi. Fugit ipsam facilis ipsum nisi autem alias. A est esse sed nemo tenetur non.",
+            "about_html":"\u003cp\u003eSint odit autem non eaque asperiores esse eveniet omnis. Et explicabo praesentium eos dolor ut voluptas expedita. Laborum doloremque dicta voluptas fugiat dignissimos ut fugit deleniti. Dolorem neque et ut quis nemo. Nam et voluptatem quam ea et atque. Aut et ipsum veritatis cum. Eveniet consequuntur quod non quis. Sunt corrupti illum ipsum animi. Fugit ipsam facilis ipsum nisi autem alias. A est esse sed nemo tenetur non.\u003c/p\u003e\n",
+            "address_city":"Markbury",
+            "address_neighborhood":"",
+            "address_state":"NC",
+            "address_zip_code":null,
+            "budget":"",
+            "budget_html":"",
+            "campaign_type":"flexible",
+            "category_id":8,
+            "created_at":"2014-07-04T16:47:29+00:00",
+            "expires_at":"2014-08-17T04:59:59+00:00",
+            "featured":true,
+            "goal":"100000.0",
+            "hash_tag":"",
+            "headline":"Et hic laboriosam voluptatibus accusantium velit dolor.",
+            "hero_image":{
+              "hero_image":{
+                "url":"/uploads/neighborly/api/project/hero_image/18/image.jpg",
+                "blur":{
+                  "url":"/uploads/neighborly/api/project/hero_image/18/blur_image.jpg"
+                }
+              }
+            },
+            "home_page":true,
+            "more_links":null,
+            "name":"Quam soluta.",
+            "online_date":"2014-07-05T01:47:25+00:00",
+            "online_days":43,
+            "organization_type":null,
+            "permalink":"quam-soluta",
+            "pledged":"170.0",
+            "recommended":true,
+            "short_url":null,
+            "site":"",
+            "state":"online",
+            "street_address":null,
+            "terms":"",
+            "terms_html":"",
+            "uploaded_image":{
+              "uploaded_image":{
+                "url":"/uploads/neighborly/api/project/uploaded_image/18/image.jpg",
+                "project_thumb":{
+                  "url":"/uploads/neighborly/api/project/uploaded_image/18/project_thumb_image.jpg"
+                },
+                "project_thumb_small":{
+                  "url":"/uploads/neighborly/api/project/uploaded_image/18/project_thumb_small_image.jpg"
+                },
+                "project_thumb_large":{
+                  "url":"/uploads/neighborly/api/project/uploaded_image/18/project_thumb_large_image.jpg"
+                },
+                "project_thumb_facebook":{
+                  "url":"/uploads/neighborly/api/project/uploaded_image/18/project_thumb_facebook_image.jpg"
+                }
+              }
+            },
+            "video_embed_url":null,
+            "video_thumbnail":{
+              "video_thumbnail":{
+                "url":null,
+                "project_thumb":{
+                  "url":null
+                },
+                "project_thumb_small":{
+                  "url":null
+                },
+                "project_thumb_large":{
+                  "url":null
+                },
+                "project_thumb_facebook":{
+                  "url":null
+                }
+              }
+            },
+            "video_url":"http://vimeo.com/79833901",
+            "channel_id":null,
+            "rights":{
+              "can_approve":false,
+              "can_launch":false,
+              "can_reject":false,
+              "can_push_to_draft":true,
+              "can_push_to_trash":false
+            },
+            "url":"http://localhost:3000/api/projects/18",
+            "html_url":"http://localhost:3000/projects/quam-soluta",
+            "user":{
+              "id":5,
+              "bio":null,
+              "created_at":"2014-07-04T16:42:01+00:00",
+              "email":"org@org.com",
+              "facebook_url":null,
+              "linkedin_url":null,
+              "other_url":null,
+              "profile_type":"organization",
+              "twitter_url":null,
+              "name":"Organization Name",
+              "image_url":"/uploads/organization/image/1/large_image.jpg",
+              "total_contributed":0,
+              "admin":true,
+              "url":"http://localhost:3000/api/users/5",
+              "html_url":"http://localhost:3000/neighbors/5-organization-name"
+            }
+          }
+        }
 
 
 + Response 401 (application/json)
@@ -390,7 +447,11 @@ Some atributes may not be saved, it will depends from the user access rights.
 
     + Body
 
-            {"project"=>{"name"=>"Foo Bar Project Updated"}}
+            {
+              "project":{
+                "name":"Foo Bar Project Updated"
+              }
+            }
 
 + Response 204 (application/json)
 
@@ -404,7 +465,13 @@ Some atributes may not be saved, it will depends from the user access rights.
 
 + Response 422 (application/json)
 
-        {"errors":{"name":["can't be blank"]]}}
+        {
+          "errors":{
+            "name":[
+              "can't be blank"
+            ]
+          }
+        }
 
 + Response 403 (application/json)
 
@@ -430,33 +497,9 @@ Some atributes may not be saved, it will depends from the user access rights.
 
 + Response 403 (application/json)
 
-## Approve a Project [/project/{id}/approve]
+## /project/{id}/approve
 
-### Change the project state to soon [PUT]
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-
-+ Response 204 (application/json)
-
-+ Response 400 (application/json)
-
-        {}
-
-+ Response 401 (application/json)
-
-        {}
-
-+ Response 403 (application/json)
-
-## Launch a Project [/project/{id}/launch]
-
-### Change the project state to online [PUT]
+### Approve a Project [PUT]
 
 + Request
 
@@ -478,33 +521,9 @@ Some atributes may not be saved, it will depends from the user access rights.
 
 + Response 403 (application/json)
 
-## Reject a Project [/project/{id}/reject]
+## /project/{id}/launch
 
-### Change the project state to rejected [PUT]
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-
-+ Response 204 (application/json)
-
-+ Response 400 (application/json)
-
-        {}
-
-+ Response 401 (application/json)
-
-        {}
-
-+ Response 403 (application/json)
-
-## Push a Project to Draft [/project/{id}/push_to_draft]
-
-### Change the project state to draft [PUT]
+### Launch a Project [PUT]
 
 + Request
 
@@ -526,8 +545,9 @@ Some atributes may not be saved, it will depends from the user access rights.
 
 + Response 403 (application/json)
 
-## Channel [/channels/{id}]
-### Fetch a channel information [GET]
+## /project/{id}/reject
+
+### Reject a Project [PUT]
 
 + Request
 
@@ -537,16 +557,55 @@ Some atributes may not be saved, it will depends from the user access rights.
             Authorization: Token your-token-here
 
 
-+ Response 200 (application/json)
++ Response 204 (application/json)
 
-        { "channel"=>{"id"=>52, "name"=>"Test", "description"=>"Lorem Ipsum", "permalink"=>"3-test-page", "created_at"=>"2014-07-15T06:35:03.389-05:00", "updated_at"=>"2014-07-15T06:35:03.389-05:00", "image"=>{"image"=>{"url"=>nil, "thumb"=>{"url"=>nil}, "large"=>{"url"=>nil}, "x_large"=>{"url"=>nil}}}, "video_embed_url"=>nil, "video_url"=>nil, "how_it_works"=>nil, "how_it_works_html"=>nil, "terms_url"=>"http://test.host/terms", "state"=>"draft", "user_id"=>3432, "accepts_projects"=>true, "submit_your_project_text"=>nil, "submit_your_project_text_html"=>nil, "start_content"=>nil, "start_hero_image"=>{"start_hero_image"=>{"url"=>nil, "blur"=>{"url"=>nil}}}, "success_content"=>nil}} }
++ Response 400 (application/json)
 
-## Contributions [/contributions]
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+
+## /project/{id}/push_to_draft
+
+### Push a Project to Draft [PUT]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 403 (application/json)
+
+
+# Group Contributions
+
+## /contributions
+
 ### List contributions [GET]
 
 Requires the user to be an admin.
 
-`query` and `between_values` parameters are non mandatory.
++ Parameters
+
+    + query (optional, string) ... Search for contributions
+    + between_values (optional, object) ... Filter between values.
 
 + Request
 
@@ -564,7 +623,12 @@ Requires the user to be an admin.
 
     + Body
 
-            { "between_values": { "initial": "500.00", "final": "1000.00" } }
+            {
+              "between_values":{
+                "initial":"500.00",
+                "final":"1000.00"
+              }
+            }
 
 
 + Response 200 (application/json)
@@ -621,11 +685,11 @@ Requires the user to be an admin.
 
         {}
 
-## Manually Confirm a Contibution [/contribution/{id}/confirm]
+## /contribution/{id}/confirm
+
+### Manually Confirm a Contibution [PUT]
 
 Requires the user to be an admin.
-
-### Change the contribution state to confirmed [PUT]
 
 + Request
 
@@ -645,11 +709,11 @@ Requires the user to be an admin.
 
         {}
 
-## Set a Contibution as Pending [/contribution/{id}/pendent]
+## /contribution/{id}/pendent
+
+### Set a Contibution as Pending [PUT]
 
 Requires the user to be an admin.
-
-### Change the contribution state to pending [PUT]
 
 + Request
 
@@ -669,11 +733,11 @@ Requires the user to be an admin.
 
         {}
 
-## Refund a Contribution [/contribution/{id}/refund]
+## /contribution/{id}/refund
+
+### Refund a Contribution [PUT]
 
 Requires the user to be an admin.
-
-### Change the contribution state to refunded [PUT]
 
 + Request
 
@@ -693,12 +757,13 @@ Requires the user to be an admin.
 
         {}
 
+## /contribution/{id}/hide
 
-## Hide a Contribution [/contribution/{id}/hide]
+### Hide a Contribution [PUT]
 
 Requires the user to be an admin.
 
-### Change the contribution state to refunded_and_canceled [PUT]
+It will change the contribution state to `refunded_and_canceled`.
 
 + Request
 
@@ -718,11 +783,11 @@ Requires the user to be an admin.
 
         {}
 
-## Cancel a Contribution [/contribution/{id}/cancel]
+## /contribution/{id}/cancel
+
+### Cancel a Contribution[PUT]
 
 Requires the user to be an admin.
-
-### Change the contribution state to canceled [PUT]
 
 + Request
 
@@ -741,9 +806,7 @@ Requires the user to be an admin.
 + Response 401 (application/json)
 
 
-## Contribution [/contributions/{id}]
-
-Requires the user to be an admin.
+## /contributions/{id}
 
 ### Update a Contribution [PUT]
 
@@ -758,7 +821,11 @@ Requires the user to be an admin.
 
     + Body
 
-            {"contribution"=>{"value"=>"10.0"}}
+          {
+            "contribution":{
+              "value":"10.0"
+            }
+          }
 
 + Response 204 (application/json)
 
@@ -772,7 +839,13 @@ Requires the user to be an admin.
 
 + Response 422 (application/json)
 
-        {"errors":{"value":["can't be blank"]}}
+        {
+          "errors":{
+            "value":[
+              "can't be blank"
+            ]
+          }
+        }
 
 
 ### Fetch Contribution information [GET]
@@ -849,4 +922,241 @@ Requires the user to be an admin.
         {}
 
 + Response 401 (application/json)
+
+# Group Tags
+
+## /tags
+
+### List tags [GET]
+
++ Parameters
+
+    + popular (optional, boolean) ... Filter by popular tags
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {
+          "tags":[
+            {
+              "id":3,
+              "name":"bike",
+              "total_projects":4,
+              "visible":true
+            }
+          ],
+          "meta":{
+            "page":1,
+            "total":1,
+            "total_pages":1
+          }
+        }
+
+
++ Response 401 (application/json)
+
+        {}
+
+### Create a tag [POST]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+          {
+            "tag":{
+              "name":"foobar",
+              "visible":true
+            }
+          }
+
++ Response 201 (application/json)
+
+        {
+          "tag":{
+            "id":3,
+            "name":"bike",
+            "total_projects":4,
+            "visible":true
+          }
+        }
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 422 (application/json)
+
+        {
+          "errors":{
+            "name":[
+              "has already been taken"
+            ]
+          }
+        }
+
+## /tags/{id}
+
+### Update a tag [PUT]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+          {
+            "tag":{
+              "name":"foobar-updated",
+              "visible":true
+            }
+          }
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 422 (application/json)
+
+        {
+          "errors":{
+            "name":[
+              "has already been taken"
+            ]
+          }
+        }
+
+### Fetch tag information [GET]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {
+          "tag":{
+            "id":3,
+            "name":"bike",
+            "total_projects":4,
+            "visible":true
+          }
+        }
+
+
+### Destroy a tag [DELETE]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
+# Group Channels
+
+## /channels/{id}
+### Fetch a channel information [GET]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {
+          "channel":{
+            "id":52,
+            "name":"Test",
+            "description":"Lorem Ipsum",
+            "permalink":"3-test-page",
+            "created_at":"2014-07-15T06:35:03.389-05:00",
+            "updated_at":"2014-07-15T06:35:03.389-05:00",
+            "image":{
+              "image":{
+                "url":null,
+                "thumb":{
+                  "url":null
+                },
+                "large":{
+                  "url":null
+                },
+                "x_large":{
+                  "url":null
+                }
+              }
+            },
+            "video_embed_url":null,
+            "video_url":null,
+            "how_it_works":null,
+            "how_it_works_html":null,
+            "terms_url":"http://test.host/terms",
+            "state":"draft",
+            "user_id":3432,
+            "accepts_projects":true,
+            "submit_your_project_text":null,
+            "submit_your_project_text_html":null,
+            "start_content":null,
+            "start_hero_image":{
+              "start_hero_image":{
+                "url":null,
+                "blur":{
+                  "url":null
+                }
+              }
+            },
+            "success_content":null
+          }
+        }
 
