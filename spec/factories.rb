@@ -54,6 +54,7 @@ FactoryGirl.define do
     name 'Test'
     description 'Lorem Ipsum'
     sequence(:permalink) { |n| "#{n}-test-page" }
+    state 'online'
   end
 
   factory :press_asset do
