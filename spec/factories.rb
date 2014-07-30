@@ -55,4 +55,10 @@ FactoryGirl.define do
     description 'Lorem Ipsum'
     sequence(:permalink) { |n| "#{n}-test-page" }
   end
+
+  factory :press_asset do
+    title 'Lorem'
+    url 'http://lorem.com'
+    image File.open("#{Neighborly::Api::Engine.root}/spec/fixtures/image.png")
+  end
 end
