@@ -68,7 +68,7 @@ end
 
 RSpec.shared_examples 'paginating results' do
   let(:resource_name) do
-    described_class.name.demodulize.sub('Controller', '')
+    described_class.name.demodulize.sub('Controller', '').underscore
   end
 
   describe 'pagination' do

@@ -23,6 +23,7 @@ Neighborly::Api::Engine.routes.draw do
     end
 
     resources :tags
+    resources :press_assets
     resources :users, only: %i(index show)
 
     get    'channels/:id', to: 'channels#show'

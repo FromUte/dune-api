@@ -1160,3 +1160,179 @@ Requires the user to be an admin.
           }
         }
 
+
+# Group Press Assets
+
+## /press_assets
+
+### List Press Assets [GET]
+
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {
+          "press_assets":[
+            {
+              "id":6,
+              "title":"Foo Bar",
+              "image_url":"/uploads/press_asset/image/6/foo-bar.png",
+              "url":"http://foo.bar",
+              "created_at":"2013-09-10T21:57:41.250-05:00"
+            }],
+          "meta":{
+            "page":1,
+            "total":1,
+            "total_pages":1
+          }
+        }
+
+
++ Response 401 (application/json)
+
+        {}
+
+### Create a Press Asset [POST]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+          {
+            "press_asset":{
+              "title":"Foo Bar",
+              "image":"Image object",
+              "url": "http://foo.bar"
+            }
+          }
+
++ Response 201 (application/json)
+
+        {
+          "press_asset":{
+              "id":6,
+              "title":"Foo Bar",
+              "image_url":"/uploads/press_asset/image/6/foo-bar.png",
+              "url":"http://foo.bar",
+              "created_at":"2013-09-10T21:57:41.250-05:00"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 422 (application/json)
+
+        {
+          "errors":{
+            "image":[
+              "can't be blank"
+            ]
+          }
+        }
+
+## /press_assets/{id}
+
+### Update a Press Asset [PUT]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+          {
+            "tag":{
+              "title":"Foo Bar Update"
+            }
+          }
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 422 (application/json)
+
+        {
+          "errors":{
+            "title":[
+              "can't be blank"
+            ]
+          }
+        }
+
+### Fetch tag information [GET]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {
+          "press_asset":{
+              "id":6,
+              "title":"Foo Bar",
+              "image_url":"/uploads/press_asset/image/6/foo-bar.png",
+              "url":"http://foo.bar",
+              "created_at":"2013-09-10T21:57:41.250-05:00"
+            }
+        }
+
+### Destroy a Press Asset [DELETE]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
