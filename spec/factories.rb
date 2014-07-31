@@ -61,4 +61,12 @@ FactoryGirl.define do
     url 'http://lorem.com'
     image File.open("#{Neighborly::Api::Engine.root}/spec/fixtures/image.png")
   end
+
+  factory :reward do
+    project
+    title 'Awesome Foo Bar'
+    minimum_value 10.00
+    description 'Foo bar'
+    days_to_delivery 10
+  end
 end
