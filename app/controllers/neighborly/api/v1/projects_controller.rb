@@ -54,7 +54,7 @@ module Neighborly::Api
       def collection
         @collection ||= begin
           authorized_scope = policy_scope(Neighborly::Api::Project)
-          apply_scopes(scoped_by_state(authorized_scope)).all
+          apply_scopes(scoped_by_state(authorized_scope)).without_state('deleted')
         end
       end
 
