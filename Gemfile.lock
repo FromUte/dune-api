@@ -30,7 +30,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-admin.git
-  revision: 21d1528bd8d121424862cf342f8441577b65e5a5
+  revision: 72b41460d852e375146703811bba003344168de7
   branch: master
   specs:
     neighborly-admin (1.0.0)
@@ -71,7 +71,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-dashboard.git
-  revision: 117ab7c0c58b5ae19bd673c5332fd56120180139
+  revision: 0f799b26df7e3c33d033ad5fa27f27dd1326068a
   branch: master
   specs:
     neighborly-dashboard (0.0.1)
@@ -542,7 +542,7 @@ DEPENDENCIES
   capybara (~> 2.2.1)
   capybara-webkit
   carrierwave (~> 0.9.0)
-  catarse_monkeymail (~> 0.1.4)
+  catarse_monkeymail (~> 0.1.6)
   coffee-rails (~> 4.0.1)
   coveralls
   database_cleaner

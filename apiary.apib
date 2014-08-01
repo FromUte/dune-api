@@ -1102,7 +1102,79 @@ Requires the user to be an admin.
 
 # Group Channels
 
+## /channels
+
+### List Channels [GET]
+
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {
+          "channels":[
+            {
+              "id":52,
+              "name":"Test",
+              "description":"Lorem Ipsum",
+              "permalink":"3-test-page",
+              "created_at":"2014-07-15T06:35:03.389-05:00",
+              "updated_at":"2014-07-15T06:35:03.389-05:00",
+              "image":{
+                "image":{
+                  "url":null,
+                  "thumb":{
+                    "url":null
+                  },
+                  "large":{
+                    "url":null
+                  },
+                  "x_large":{
+                    "url":null
+                  }
+                }
+              },
+              "video_embed_url":null,
+              "video_url":null,
+              "how_it_works":null,
+              "how_it_works_html":null,
+              "terms_url":"http://test.host/terms",
+              "state":"draft",
+              "user_id":3432,
+              "accepts_projects":true,
+              "submit_your_project_text":null,
+              "submit_your_project_text_html":null,
+              "start_content":null,
+              "start_hero_image":{
+                "start_hero_image":{
+                  "url":null,
+                  "blur":{
+                    "url":null
+                  }
+                }
+              },
+              "success_content":null
+            }],
+          "meta":{
+            "page":1,
+            "total":1,
+            "total_pages":1
+          }
+        }
+
+
++ Response 401 (application/json)
+
+        {}
+
 ## /channels/{id}
+
 ### Fetch a channel information [GET]
 
 + Request

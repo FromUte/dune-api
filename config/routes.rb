@@ -25,8 +25,8 @@ Neighborly::Api::Engine.routes.draw do
     resources :tags
     resources :press_assets
     resources :users, only: %i(index show)
+    resources :channels, only: %i(index show)
 
-    get    'channels/:id', to: 'channels#show'
     post   'sessions',     to: 'sessions#create'
     delete 'sessions',     to: 'sessions#destroy'
   end
