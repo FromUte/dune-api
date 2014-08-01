@@ -22,6 +22,7 @@ Neighborly::Api::Engine.routes.draw do
       end
     end
 
+    resources :rewards, only: %i(show)
     resources :tags
     resources :press_assets
     resources :users, only: %i(index show)

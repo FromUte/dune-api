@@ -25,7 +25,9 @@ Here you will find how to integrate an application with Neighbor.ly. Check our [
   - `422` Unprocessable Entity - The resource may contain validation errors.
   - `503` Service Unavailable - The service is temporary unavailable (e.g. scheduled Platform Maintenance). Try again later.
 
-## Sessions [/sessions]
+# Group Sessions
+
+## /sessions
 
     You must be authenticated to use the API, to authenticate you will need an access token.
 
@@ -1407,4 +1409,35 @@ Requires the user to be an admin.
 + Response 401 (application/json)
 
         {}
+
+# Group Rewards
+
+## /rewards/{id}
+### Fetch a reward information [GET]
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {
+          "reward":{
+            "id":277,
+            "project_id":75,
+            "minimum_value":"1000.0",
+            "maximum_contributions":null,
+            "description":"Foo Bar Lorem",
+            "created_at":"2014-01-09T02:36:38.297-06:00",
+            "updated_at":"2014-01-10T18:44:53.686-06:00",
+            "row_order":2,
+            "days_to_delivery":20,
+            "soon":false,
+            "title":"Foo Bar"
+          }
+        }
 
