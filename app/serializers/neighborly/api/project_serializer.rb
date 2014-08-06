@@ -61,7 +61,6 @@ module Neighborly::Api
       :headline,
       :hero_image,
       :home_page,
-      :more_links,
       :name,
       :online_date,
       :online_days,
