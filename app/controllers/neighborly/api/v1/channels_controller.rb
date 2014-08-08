@@ -2,6 +2,8 @@ module Neighborly::Api
   module V1
     class ChannelsController < BaseController
       include PaginatedController
+      before_action :require_admin!, except: %i(index show)
+
       has_scope :pg_search, as: :query
 
       def index
@@ -10,6 +12,24 @@ module Neighborly::Api
 
       def show
         respond_with Channel.find(params[:id])
+      end
+
+      def destroy
+        channel = Channel.find(params[:id])
+        authorize channel
+
+        channel.delete
+        head :no_content
+      end
+
+      [:push_to_draft, :push_to_online].each do |name|
+        define_method name do
+          channel = Channel.find(params[:id])
+          authorize channel
+
+          channel.send("#{name.to_s}!")
+          head :no_content
+        end
       end
 
       private
