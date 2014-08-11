@@ -7,12 +7,11 @@ GIT
 
 GIT
   remote: git://github.com/bernat/best_in_place.git
-  revision: 366413be357d65cdf47031e928aea969f72e3659
-  branch: rails-4
+  revision: c6f96da87554fb06c995f359f598d86d63a8a5ae
   specs:
-    best_in_place (2.0.3)
-      jquery-rails
-      rails (~> 4)
+    best_in_place (3.0.0.alpha)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
 
 GIT
   remote: git://github.com/josemarluedke/font-icons-rails.git
@@ -30,7 +29,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-admin.git
-  revision: 72b41460d852e375146703811bba003344168de7
+  revision: f75189b28436f2e179917578ae18ca8afdf1c641
   branch: master
   specs:
     neighborly-admin (1.0.0)
@@ -38,7 +37,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-balanced-bankaccount.git
-  revision: 0d780a5056b39e3dc7fd4706125fc92a12c0b6cb
+  revision: 2bbbaef6e636cbd3adfe5405e9984e79003955fc
   branch: master
   specs:
     neighborly-balanced-bankaccount (1.0.0)
@@ -59,7 +58,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-balanced.git
-  revision: 6d4d887cbfde8a6c8e303ea02162923820baa127
+  revision: c22e6523465e3dbc5da87b06b4ca5546a262c0e5
   branch: master
   specs:
     neighborly-balanced (1.1.0)
@@ -71,7 +70,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-dashboard.git
-  revision: 0f799b26df7e3c33d033ad5fa27f27dd1326068a
+  revision: 00441c773e415d7f9132e87d86db219d64485bd7
   branch: master
   specs:
     neighborly-dashboard (0.0.1)
