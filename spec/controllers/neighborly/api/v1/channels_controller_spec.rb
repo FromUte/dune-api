@@ -67,4 +67,37 @@ describe Neighborly::Api::V1::ChannelsController do
       ).to have_key('id')
     end
   end
+
+  describe 'destroy', authorized: true, admin: true do
+    let(:do_request) { delete :destroy, id: channel.id, format: :json }
+
+    it 'returns a success http status' do
+      do_request
+      expect(response.status).to eq(204)
+      expect{ channel.reload }.to raise_error
+    end
+  end
+
+  [:push_to_draft, :push_to_online].each do |name|
+    describe "#{name}", authorized: true, admin: true do
+      let(:user)       { FactoryGirl.create(:user, admin: true) }
+      let(:channel)    { FactoryGirl.create(:channel, state: 'draft') }
+      let(:do_request) { put name, id: channel.id, format: :json }
+
+      it 'returns a success http status' do
+        do_request
+        expect(response.status).to eq(204)
+      end
+
+      it 'authorizes the resource' do
+        expect(controller).to receive(:authorize).with(channel)
+        do_request
+      end
+
+      it 'calls the state machine helper to change the state' do
+        expect_any_instance_of(Channel).to receive("#{name}!")
+        do_request
+      end
+    end
+  end
 end

@@ -216,6 +216,7 @@ describe Neighborly::Api::V1::ProjectsController do
   end
 
   describe 'destroy', authorized: true do
+    let(:user)       { FactoryGirl.create(:user, admin: true) }
     let(:project)    { FactoryGirl.create(:project, user: user, state: :draft) }
     let(:do_request) { delete :destroy, id: project.id, format: :json }
 
