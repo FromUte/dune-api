@@ -47,6 +47,91 @@ describe Neighborly::Api::V1::ChannelsController do
     end
   end
 
+  describe '#create', authorized: true, admin: true do
+    let(:do_request) do
+      post :create,
+        channel: FactoryGirl.build(:channel).attributes,
+        format: :json
+    end
+
+    it 'creates the record' do
+      expect{ do_request }.to change{ Channel.count }.from(1).to(2)
+    end
+
+    context 'on success' do
+      it 'returns a success http status' do
+        do_request
+        expect(response.status).to eq(201)
+      end
+    end
+
+    context 'on failure' do
+      let(:do_request) do
+        post :create,
+          channel: { name: nil },
+          format: :json
+      end
+
+      it 'returns a unprocessable entity http status' do
+        do_request
+        expect(response.status).to eq(422)
+      end
+
+      it 'returns a json with errors' do
+        do_request
+
+        expect(parsed_response.count).to eq(1)
+        expect(parsed_response['errors']['name']).not_to be_empty
+      end
+    end
+  end
+
+  describe '#update', authorized: true do
+    let(:user) { channel.user }
+
+    let(:do_request) do
+      put :update,
+        id: channel.id,
+        channel: { name: 'foo bar' },
+        format: :json
+    end
+
+    it 'updates the record' do
+      expect(Channel).to receive(:update)
+        .with(channel.id.to_s, { 'name' => 'foo bar' })
+
+      do_request
+    end
+
+    context 'on success' do
+      it 'returns a no content http status' do
+        do_request
+        expect(response.status).to eq(204)
+      end
+    end
+
+    context 'on failure' do
+      let(:do_request) do
+        put :update,
+          id: channel.id,
+          channel: { name: nil },
+          format: :json
+      end
+
+      it 'returns a unprocessable entity http status' do
+        do_request
+        expect(response.status).to eq(422)
+      end
+
+      it 'returns a json with errors' do
+        do_request
+
+        expect(parsed_response.count).to eq(1)
+        expect(parsed_response['errors']['name']).not_to be_empty
+      end
+    end
+  end
+
   describe '#show', authorized: true do
     let(:do_request) { get :show, id: channel.id, format: :json }
 
