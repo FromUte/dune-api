@@ -26,7 +26,10 @@ Neighborly::Api::Engine.routes.draw do
     resources :tags
     resources :press_assets
     resources :users, only: %i(index show)
+
     resources :channels do
+      resources :members, only: %i(index create destroy), controller: 'channels/members'
+
       member do
         put :push_to_draft
         put :push_to_online
