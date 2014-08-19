@@ -2,7 +2,7 @@ module Neighborly::Api
   module V1
     class ChannelsController < BaseController
       include PaginatedController
-      before_action :require_admin!, except: %i(index show)
+      before_action :require_admin!, except: %i(index show update)
 
       has_scope :pg_search, as: :query
 
@@ -12,6 +12,19 @@ module Neighborly::Api
 
       def show
         respond_with Channel.find(params[:id])
+      end
+
+      def create
+        channel = ::Channel.new(permitted_params)
+        authorize channel
+        channel.save
+        respond_with channel
+      end
+
+      def update
+        @channel = Channel.find(params[:id])
+        authorize @channel
+        respond_with Channel.update(params[:id], permitted_params)
       end
 
       def destroy
@@ -33,6 +46,10 @@ module Neighborly::Api
       end
 
       private
+
+      def permitted_params
+        params.permit(policy(@channel || Channel).permitted_attributes(params))[:channel]
+      end
 
       def collection
         @collection ||= begin
