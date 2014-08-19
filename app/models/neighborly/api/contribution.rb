@@ -6,5 +6,9 @@ module Neighborly::Api
             start_at.to_s.sub(',', '').to_f,
             ends_at.to_s.sub(',', '').to_f)
     end
+
+    scope :by_project_id, ->(project_id) do
+      where(project_id: project_id)
+    end
   end
 end

@@ -6,6 +6,7 @@ module Neighborly::Api
       before_action :require_admin!
 
       has_scope :pg_search, as: :query
+      has_scope :by_project_id, as: :project_id
       has_scope :between_values,
         using: %i(initial final),
         type:  :hash

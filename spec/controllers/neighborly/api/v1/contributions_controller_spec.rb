@@ -58,6 +58,21 @@ describe Neighborly::Api::V1::ContributionsController do
         end
       end
     end
+
+    describe 'filter by project id' do
+      let(:first_project)  { FactoryGirl.create(:project, state: 'online') }
+      let(:second_project) { FactoryGirl.create(:project, state: 'online') }
+
+      before do
+        @contribution = FactoryGirl.create(:contribution, value: 10, project: first_project)
+        FactoryGirl.create(:contribution, value: 10, project: second_project)
+      end
+
+      it 'returns just those contributions in the given project id' do
+        get :index, project_id: first_project.id, format: :json
+        expect(contributions_returned).to eql([@contribution.id])
+      end
+    end
   end
 
   describe '#show', authorized: true, admin: true do
