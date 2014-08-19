@@ -23,6 +23,10 @@ class UserSerializer < ActiveModel::Serializer
     main_app.user_url(object)
   end
 
+  def manager
+    (object.admin? || object.channel.present? || object.channels.any?)
+  end
+
   attributes :id,
     :bio,
     :created_at,
@@ -37,5 +41,6 @@ class UserSerializer < ActiveModel::Serializer
     :total_contributed,
     :admin,
     :url,
-    :html_url
+    :html_url,
+    :manager
 end
