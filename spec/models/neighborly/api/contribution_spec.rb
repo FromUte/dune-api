@@ -16,4 +16,18 @@ describe Neighborly::Api::Contribution do
       described_class.between_values('1,000', '2,000.40')
     end
   end
+
+  describe '.by_project_id' do
+    let(:first_project)  { FactoryGirl.create(:project, state: 'online') }
+    let(:second_project) { FactoryGirl.create(:project, state: 'online') }
+
+    before do
+      FactoryGirl.create(:contribution, value: 10, project: first_project)
+      FactoryGirl.create(:contribution, value: 10, project: second_project)
+    end
+
+    it 'returns the contributions from the first project' do
+      expect(described_class.by_project_id(first_project.id).size).to eq 1
+    end
+  end
 end
