@@ -636,46 +636,46 @@ Requires the user to be an admin.
 
 + Response 200 (application/json)
 
-      {
-        "contributions":[
-          {
-            "id":1714,
-            "project_id":62,
-              "user_id":1,
-              "reward_id":226,
-              "value":"25.0",
-              "confirmed_at":null,
-              "created_at":"2014-01-14T16:32:36.324-06:00",
-              "anonymous":false,
-              "key":"e624ea64c2a7fc85e15b70cdf9e83fc9",
-              "credits":false,
-              "payment_method":null,
-              "payment_token":null,
-              "payment_id":null,
-              "address_street":null,
-              "address_number":null,
-              "address_complement":null,
-              "address_neighborhood":null,
-              "address_zip_code":null,
-              "address_city":null,
-              "address_state":null,
-              "address_phone_number":null,
-              "payment_choice":null,
-              "payment_service_fee":"0.0",
-              "state":"deleted",
-              "short_note":"",
-              "payment_service_fee_paid_by_user":false,
-              "matching_id":null,
-              "rights":{
-                "can_pendent":true,
-                "can_wait_confirmation":false,
-                "can_confirm":true,
-                "can_cancel":true,
-                "can_request_refund":false,
-                "can_refund":false,
-                "can_push_to_trash":true
+        {
+          "contributions":[
+            {
+              "id":1714,
+              "project_id":62,
+                "user_id":1,
+                "reward_id":226,
+                "value":"25.0",
+                "confirmed_at":null,
+                "created_at":"2014-01-14T16:32:36.324-06:00",
+                "anonymous":false,
+                "key":"e624ea64c2a7fc85e15b70cdf9e83fc9",
+                "credits":false,
+                "payment_method":null,
+                "payment_token":null,
+                "payment_id":null,
+                "address_street":null,
+                "address_number":null,
+                "address_complement":null,
+                "address_neighborhood":null,
+                "address_zip_code":null,
+                "address_city":null,
+                "address_state":null,
+                "address_phone_number":null,
+                "payment_choice":null,
+                "payment_service_fee":"0.0",
+                "state":"deleted",
+                "short_note":"",
+                "payment_service_fee_paid_by_user":false,
+                "matching_id":null,
+                "rights":{
+                  "can_pendent":true,
+                  "can_wait_confirmation":false,
+                  "can_confirm":true,
+                  "can_cancel":true,
+                  "can_request_refund":false,
+                  "can_refund":false,
+                  "can_push_to_trash":true
+                }
               }
-            }
           ],
           "meta":{
             "page":1,
@@ -824,11 +824,11 @@ Requires the user to be an admin.
 
     + Body
 
-          {
-            "contribution":{
-              "value":"10.0"
+            {
+              "contribution":{
+                "value":"10.0"
+              }
             }
-          }
 
 + Response 204 (application/json)
 
@@ -980,12 +980,12 @@ Requires the user to be an admin.
 
     + Body
 
-          {
-            "tag":{
-              "name":"foobar",
-              "visible":true
+            {
+              "tag":{
+                "name":"foobar",
+                "visible":true
+              }
             }
-          }
 
 + Response 201 (application/json)
 
@@ -1235,6 +1235,138 @@ Requires the user to be an admin.
           }
         }
 
+# Group Channel Members
+
+## /channels/{channel_id}/members
+
+## List Channel Members [GET]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 200 (application/json)
+
+        {
+          "users":[
+            {
+              "id":18,
+              "bio":null,
+              "created_at":"2014-07-04T12:42:41+00:00",
+              "email":"camila@casperwaters.name",
+              "facebook_url":null,
+              "linkedin_url":null,
+              "other_url":null,
+              "profile_type":"personal",
+              "twitter_url":null,
+              "name":"Mrs. Abigayle Gaylord",
+              "image_url":"http://neighbor.ly/uploads/user/uploaded_image/18/thumb_avatar_image.jpg",
+              "total_contributed":"70.0",
+              "admin":false,
+              "url":"http://neighbor.ly/api/users/18",
+              "html_url":"http://neighbor.ly/neighbors/18-mrs-abigayle-gaylord"
+            }
+          ]
+        }
+
+
++ Response 401 (application/json)
+
+        {}
+
+
+
+### Add a user as member of a Channel [POST]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+    + Body
+
+            {
+              "channel_member":{
+                "user_id":1
+              }
+            }
+
++ Response 201 (application/json)
+
+
+        {
+          "user":{
+            "id":18,
+            "bio":null,
+            "created_at":"2014-07-04T12:42:41+00:00",
+            "email":"camila@casperwaters.name",
+            "facebook_url":null,
+            "linkedin_url":null,
+            "other_url":null,
+            "profile_type":"personal",
+            "twitter_url":null,
+            "name":"Mrs. Abigayle Gaylord",
+            "image_url":"http://neighbor.ly/uploads/user/uploaded_image/18/thumb_avatar_image.jpg",
+            "total_contributed":"70.0",
+            "admin":false,
+            "url":"http://neighbor.ly/api/users/18",
+            "html_url":"http://neighbor.ly/neighbors/18-mrs-abigayle-gaylord"
+          }
+        }
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
++ Response 422 (application/json)
+
+        {
+          "errors":{
+            "user_id":[
+              "can't be blank"
+            ]
+          }
+        }
+
+
+## /channels/{channel_id}/members/{user_id}
+
+### Remove a user from the list of Channel Members [DELETE]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
 
 # Group Press Assets
 
@@ -1287,13 +1419,13 @@ Requires the user to be an admin.
 
     + Body
 
-          {
-            "press_asset":{
-              "title":"Foo Bar",
-              "image":"Image object",
-              "url": "http://foo.bar"
+            {
+              "press_asset":{
+                "title":"Foo Bar",
+                "image":"Image object",
+                "url": "http://foo.bar"
+              }
             }
-          }
 
 + Response 201 (application/json)
 

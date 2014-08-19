@@ -57,6 +57,11 @@ FactoryGirl.define do
     state 'online'
   end
 
+  factory :channel_member do
+    user
+    channel
+  end
+
   factory :press_asset do
     title 'Lorem'
     url 'http://lorem.com'
