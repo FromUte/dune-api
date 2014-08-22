@@ -14,6 +14,59 @@ describe Neighborly::Api::V1::ProjectsController do
 
     it_behaves_like 'paginating results'
 
+    describe 'manageable' do
+      before do
+        @draft_project = FactoryGirl.create(:project, state: 'draft', user: user)
+        @online_project = FactoryGirl.create(:project, state: 'online')
+      end
+
+      context 'when filtering by manageable projects' do
+        let(:do_request) { get :index, format: :json, manageable: true }
+
+        context 'when user is not an admin' do
+          let(:user) { FactoryGirl.create(:user, admin: false) }
+
+          it 'returns only mangeable projects' do
+            do_request
+            expect(projects_returned).to include(@draft_project.id)
+          end
+        end
+
+        context 'when user is an admin' do
+          let(:user) { FactoryGirl.create(:user, admin: true) }
+
+          it 'returns all projects' do
+            do_request
+            expect(projects_returned).to include(@draft_project.id, @online_project.id)
+          end
+        end
+      end
+
+      context 'when not filtering by manageable projects' do
+        let(:do_request) { get :index, format: :json, manageable: false }
+
+        context 'when user is not an admin' do
+          let(:user) { FactoryGirl.create(:user, admin: false) }
+
+          it 'returns only public projects' do
+            do_request
+            expect(projects_returned).to include(@online_project.id)
+            expect(projects_returned).not_to include(@draft_project.id)
+          end
+        end
+
+        context 'when user is an admin' do
+          let(:user) { FactoryGirl.create(:user, admin: true) }
+
+          it 'returns only public projects' do
+            do_request
+            expect(projects_returned).to include(@online_project.id)
+            expect(projects_returned).not_to include(@draft_project.id)
+          end
+        end
+      end
+    end
+
     describe 'ordering' do
       let!(:project_1) { FactoryGirl.create(:project, name: 'abc') }
       let!(:project_2) { FactoryGirl.create(:project, name: 'xyz') }
@@ -50,7 +103,7 @@ describe Neighborly::Api::V1::ProjectsController do
             [project.id]
           end
 
-          get :index, format: :json, state => '1'
+          get :index, format: :json, state => '1', manageable: true
           expect(projects_returned).to include(*expected_ids)
         end
       end
@@ -115,7 +168,7 @@ describe Neighborly::Api::V1::ProjectsController do
     it 'checks permissions' do
       project = FactoryGirl.create(:project, state: :draft)
       do_request
-      expect(projects_returned).to_not include(project.id)
+      expect(projects_returned).not_to include(project.id)
     end
   end
 

@@ -53,7 +53,12 @@ module Neighborly::Api
 
       def collection
         @collection ||= begin
-          authorized_scope = policy_scope(Neighborly::Api::Project)
+          if ActiveRecord::ConnectionAdapters::Column.
+              value_to_boolean(params[:manageable])
+            authorized_scope = policy_scope(Neighborly::Api::Project)
+          else
+            authorized_scope = Neighborly::Api::Project.visible
+          end
           apply_scopes(scoped_by_state(authorized_scope)).without_state('deleted')
         end
       end
