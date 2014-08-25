@@ -37,7 +37,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-balanced-bankaccount.git
-  revision: 64f6961760a2a0eb69be2c75a11218e9fddd5f2b
+  revision: ec47e4fa92c168db1606f9fc0d613fd606732428
   branch: master
   specs:
     neighborly-balanced-bankaccount (1.0.0)
@@ -48,7 +48,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-balanced-creditcard.git
-  revision: 04caefe1858b37ab07c8980be8e67dc5df826da2
+  revision: fbef3c62c06c70d9f4468a589172b05c7e7563f8
   branch: master
   specs:
     neighborly-balanced-creditcard (1.1.0)
@@ -58,7 +58,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-balanced.git
-  revision: 9721d4ab69b9a9265ee1e09eb78b8500fedda11a
+  revision: b22f37ef2d18a25414559007fc30e8f63127c1e0
   branch: master
   specs:
     neighborly-balanced (1.1.0)
@@ -70,7 +70,7 @@ GIT
 
 GIT
   remote: git://github.com/neighborly/neighborly-dashboard.git
-  revision: 00441c773e415d7f9132e87d86db219d64485bd7
+  revision: a293203639c0e3b71175e2a586a0ce66074983ae
   branch: master
   specs:
     neighborly-dashboard (0.0.1)
@@ -574,7 +574,7 @@ DEPENDENCIES
   neighborly-balanced-bankaccount!
   neighborly-balanced-creditcard!
   neighborly-dashboard!
-  newrelic_rpm (= 3.6.9.171)
+  newrelic_rpm
   nprogress-rails
   omniauth
   omniauth-facebook (= 1.5.1)
