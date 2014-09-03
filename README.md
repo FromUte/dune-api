@@ -1,10 +1,6 @@
 # Neighborly::Api
 [![Build Status](https://travis-ci.org/neighborly/neighborly-api.svg?branch=master)](https://travis-ci.org/neighborly/neighborly-api) [![Code Climate](https://codeclimate.com/github/neighborly/neighborly-api.png)](https://codeclimate.com/github/neighborly/neighborly-api)
 
-## UNDER ACTIVE DEVELOPMENT
-
-We still in development phase, so, if you use it in production, you may have some bugs. :D If you do, please report them.
-
 ## What
 
 This is the implementation of [Neighborly](https://github.com/neighborly/neighborly)'s API.

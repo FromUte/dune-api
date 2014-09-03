@@ -44,7 +44,7 @@ GIT
 PATH
   remote: .
   specs:
-    neighborly-api (0.0.1)
+    neighborly-api (1.0.0)
       active_model_serializers
       has_scope
       kaminari
