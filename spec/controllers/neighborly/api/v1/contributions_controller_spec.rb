@@ -122,7 +122,7 @@ describe Neighborly::Api::V1::ContributionsController do
       let(:do_request) do
         put :update,
             id: contribution.id,
-            contribution: { value: 5 },
+            contribution: { value: nil },
             format: :json
       end
 
