@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 1.0.1
+
+Use active_model_serializers version 0.8.1
 
 ## 1.0.0
 
