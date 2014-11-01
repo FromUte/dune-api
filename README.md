@@ -1,9 +1,9 @@
 # Neighborly::Api
-[![Build Status](https://travis-ci.org/neighborly/neighborly-api.svg?branch=master)](https://travis-ci.org/neighborly/neighborly-api) [![Code Climate](https://codeclimate.com/github/neighborly/neighborly-api.png)](https://codeclimate.com/github/neighborly/neighborly-api)
+[![Build Status](https://travis-ci.org/neighborly/neighborly-donate-api.svg?branch=master)](https://travis-ci.org/neighborly/neighborly-donate-api) [![Code Climate](https://codeclimate.com/github/neighborly/neighborly-donate-api.png)](https://codeclimate.com/github/neighborly/neighborly-donate-api)
 
 ## What
 
-This is the implementation of [Neighborly](https://github.com/neighborly/neighborly)'s API.
+This is the implementation of [Neighbor.ly Donate](https://github.com/neighborly/neighborly-donate)'s API.
 
 ## How
 
@@ -23,7 +23,7 @@ mount Neighborly::Api::Engine => '/api/', as: :neighborly_api
 
 ## Contributing
 
-1. Fork it ( https://github.com/neighborly/neighborly-api/fork )
+1. Fork it ( https://github.com/neighborly/neighborly-donate-api/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
