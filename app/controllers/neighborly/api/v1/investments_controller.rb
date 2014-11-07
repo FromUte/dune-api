@@ -1,6 +1,6 @@
 module Neighborly::Api
   module V1
-    class ContributionsController < BaseController
+    class InvestmentsController < BaseController
       include PaginatedController
 
       before_action :require_admin!
@@ -16,29 +16,29 @@ module Neighborly::Api
       end
 
       def show
-        respond_with Neighborly::Api::Contribution.find(params[:id])
+        respond_with Neighborly::Api::Investment.find(params[:id])
       end
 
       def update
-        @contribution = ::Contribution.find(params[:id])
-        authorize @contribution
-        respond_with ::Contribution.update(params[:id], permitted_params)
+        @investment = ::Investment.find(params[:id])
+        authorize @investment
+        respond_with ::Investment.update(params[:id], permitted_params)
       end
 
       def destroy
-        contribution = ::Contribution.find(params[:id])
-        authorize contribution
+        investment = ::Investment.find(params[:id])
+        authorize investment
 
-        contribution.push_to_trash!
+        investment.push_to_trash!
         head :no_content
       end
 
       [:confirm, :pendent, :refund, :hide, :cancel].each do |name|
         define_method name do
-          contribution = ::Contribution.find(params[:id])
-          authorize contribution
+          investment = ::Investment.find(params[:id])
+          authorize investment
 
-          contribution.send("#{name.to_s}!")
+          investment.send("#{name.to_s}!")
           head :no_content
         end
       end
@@ -46,19 +46,19 @@ module Neighborly::Api
       private
 
       def permitted_params
-        params.permit(policy(@contribution || ::Contribution).permitted_attributes)[:contribution]
+        params.permit(policy(@investment || ::Investment).permitted_attributes)[:investment]
       end
 
       def collection
         @collection ||= begin
           apply_scopes(
-            scoped_by_state(Neighborly::Api::Contribution)
+            scoped_by_state(Neighborly::Api::Investment)
           ).order('created_at desc').all
         end
       end
 
       def scoped_by_state(scope)
-        state_scopes = params.slice(*Contribution.state_names).keys
+        state_scopes = params.slice(*Investment.state_names).keys
         if state_scopes.any?
           scope.with_state(state_scopes)
         else

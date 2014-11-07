@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe Neighborly::Api::Contribution do
+describe Neighborly::Api::Investment do
   describe '.between_values' do
-    it 'returns the contributions with value between 15 and 20' do
-      FactoryGirl.create(:contribution, value: 10)
-      FactoryGirl.create(:contribution, value: 15)
-      FactoryGirl.create(:contribution, value: 20)
-      FactoryGirl.create(:contribution, value: 21)
+    it 'returns the investments with value between 15 and 20' do
+      FactoryGirl.create(:investment, value: 10)
+      FactoryGirl.create(:investment, value: 15)
+      FactoryGirl.create(:investment, value: 20)
+      FactoryGirl.create(:investment, value: 21)
 
       expect(described_class.between_values(15, 20).size).to eq 2
     end
@@ -22,11 +22,11 @@ describe Neighborly::Api::Contribution do
     let(:second_project) { FactoryGirl.create(:project, state: 'online') }
 
     before do
-      FactoryGirl.create(:contribution, value: 10, project: first_project)
-      FactoryGirl.create(:contribution, value: 10, project: second_project)
+      FactoryGirl.create(:investment, value: 10, project: first_project)
+      FactoryGirl.create(:investment, value: 10, project: second_project)
     end
 
-    it 'returns the contributions from the first project' do
+    it 'returns the investments from the first project' do
       expect(described_class.by_project_id(first_project.id).size).to eq 1
     end
   end

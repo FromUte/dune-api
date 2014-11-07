@@ -1,5 +1,5 @@
 module Neighborly::Api
-  class ContributionSerializer < ActiveModel::Serializer
+  class InvestmentSerializer < ActiveModel::Serializer
     def rights
       {
         can_pendent: object.can_pendent?,

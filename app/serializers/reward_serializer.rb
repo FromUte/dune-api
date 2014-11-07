@@ -2,7 +2,7 @@ class RewardSerializer < ActiveModel::Serializer
   attributes :id,
     :project_id,
     :minimum_value,
-    :maximum_contributions,
+    :maximum_investments,
     :description,
     :created_at,
     :updated_at,
