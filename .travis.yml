@@ -16,4 +16,4 @@ script:
   - 'bundle exec rspec'
 
 notifications:
-  webhooks: http://neighborly-ci.herokuapp.com/projects/a23a5977-8a4d-4760-a8a4-77755486dc59/status
+  webhooks: https://ci.neighbor.ly/projects/17c44875-7158-4126-a66f-e85c47daad59/status
