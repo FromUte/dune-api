@@ -2,7 +2,7 @@ class ChannelSerializer < ActiveModel::Serializer
   has_one :user
 
   def url
-    neighborly_api.channel_url(object.id)
+    dune.channel_url(object.id)
   end
 
   def html_url

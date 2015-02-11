@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :access_token, class: 'Neighborly::Api::AccessToken' do
+  factory :access_token, class: 'Dune::Api::AccessToken' do
     user
   end
 
@@ -7,7 +7,7 @@ FactoryGirl.define do
     name_pt { "category-#{rand}" }
   end
 
-  factory :project, class: 'Neighborly::Api::Project' do
+  factory :project, class: 'Dune::Api::Project' do
     about    'a-big-text-about-the-project'
     goal     10_000
     headline 'attractive-headline'
@@ -65,7 +65,7 @@ FactoryGirl.define do
   factory :press_asset do
     title 'Lorem'
     url 'http://lorem.com'
-    image File.open("#{Neighborly::Api::Engine.root}/spec/fixtures/image.png")
+    image File.open("#{Dune::Api::Engine.root}/spec/fixtures/image.png")
   end
 
   factory :reward do

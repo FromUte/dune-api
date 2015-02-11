@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Neighborly::Api::V1::Channels::MembersController do
-  routes                { Neighborly::Api::Engine.routes }
+describe Dune::Api::V1::Channels::MembersController do
+  routes                { Dune::Api::Engine.routes }
   let(:parsed_response) { JSON.parse(response.body) }
   let!(:channel)        { FactoryGirl.create(:channel) }
   let!(:member)         { FactoryGirl.create(:channel_member, channel: channel) }

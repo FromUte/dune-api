@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Neighborly::Api::V1::ProjectsController do
+describe Dune::Api::V1::ProjectsController do
   include ActiveSupport::Testing::TimeHelpers
-  routes { Neighborly::Api::Engine.routes }
+  routes { Dune::Api::Engine.routes }
   let(:projects_returned) do
     parsed_response.fetch('projects').map { |t| t['id'] }
   end

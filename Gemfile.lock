@@ -30,7 +30,7 @@ GIT
 PATH
   remote: .
   specs:
-    neighborly-api (1.0.1)
+    dune-api (1.0.1)
       active_model_serializers (~> 0.8.0)
       has_scope
       kaminari

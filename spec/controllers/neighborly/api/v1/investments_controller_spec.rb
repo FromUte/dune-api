@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Neighborly::Api::V1::InvestmentsController do
-  routes { Neighborly::Api::Engine.routes }
+describe Dune::Api::V1::InvestmentsController do
+  routes { Dune::Api::Engine.routes }
   let!(:investment) { FactoryGirl.create(:investment) }
 
   let(:investments_returned) do

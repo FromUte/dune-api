@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Neighborly::Api::V1::SessionsController do
-  routes                { Neighborly::Api::Engine.routes }
+describe Dune::Api::V1::SessionsController do
+  routes                { Dune::Api::Engine.routes }
   let!(:user)           { FactoryGirl.create(:user) }
   let(:parsed_response) { JSON.parse(response.body) }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Neighborly::Api::Investment do
+describe Dune::Api::Investment do
   describe '.between_values' do
     it 'returns the investments with value between 15 and 20' do
       FactoryGirl.create(:investment, value: 10)

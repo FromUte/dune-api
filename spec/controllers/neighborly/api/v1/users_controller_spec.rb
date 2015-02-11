@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Neighborly::Api::V1::UsersController do
-  routes                { Neighborly::Api::Engine.routes }
+describe Dune::Api::V1::UsersController do
+  routes                { Dune::Api::Engine.routes }
   let(:parsed_response) { JSON.parse(response.body) }
   let(:users_returned) do
     parsed_response.fetch('users').map { |t| t['id'] }

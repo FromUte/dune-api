@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Neighborly::Api::V1::PressAssetsController do
-  routes { Neighborly::Api::Engine.routes }
+describe Dune::Api::V1::PressAssetsController do
+  routes { Dune::Api::Engine.routes }
   let(:parsed_response) { JSON.parse(response.body) }
 
   describe '#index', authorized: true do
@@ -29,7 +29,7 @@ describe Neighborly::Api::V1::PressAssetsController do
   end
 
   describe '#create', authorized: true, admin: true do
-    let(:params)     { FactoryGirl.build(:press_asset).attributes.merge(image: Rack::Test::UploadedFile.new("#{Neighborly::Api::Engine.root}/spec/fixtures/image.png"))}
+    let(:params)     { FactoryGirl.build(:press_asset).attributes.merge(image: Rack::Test::UploadedFile.new("#{Dune::Api::Engine.root}/spec/fixtures/image.png"))}
     let(:do_request) { post :create, press_asset: params, format: :json }
 
     context 'on success' do

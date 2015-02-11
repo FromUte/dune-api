@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Neighborly::Api::V1::TagsController do
-  routes { Neighborly::Api::Engine.routes }
+describe Dune::Api::V1::TagsController do
+  routes { Dune::Api::Engine.routes }
   let(:parsed_response) { JSON.parse(response.body) }
 
   describe '#index', authorized: true do

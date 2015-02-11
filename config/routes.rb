@@ -1,6 +1,6 @@
-Neighborly::Api::Engine.routes.draw do
+Dune::Api::Engine.routes.draw do
   scope module: :v1,
-        constraints: Neighborly::Api::ApiConstraint.new(revision: 1, default: true),
+        constraints: Dune::Api::ApiConstraint.new(revision: 1, default: true),
         defaults: { format: :json } do
 
     resources :projects do

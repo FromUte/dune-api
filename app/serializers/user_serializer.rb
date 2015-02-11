@@ -16,7 +16,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def url
-    neighborly_api.user_url(object.id)
+    dune_api.user_url(object.id)
   end
 
   def html_url

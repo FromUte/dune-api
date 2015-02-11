@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Neighborly::Api::ApiConstraint do
+describe Dune::Api::ApiConstraint do
   let(:request) { double :request }
 
   describe '#matches?' do
