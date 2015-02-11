@@ -1,9 +1,9 @@
-# Neighborly::Api
-[![Build Status](https://travis-ci.org/neighborly/neighborly-donate-api.svg?branch=master)](https://travis-ci.org/neighborly/neighborly-donate-api) [![Code Climate](https://codeclimate.com/github/neighborly/neighborly-donate-api.png)](https://codeclimate.com/github/neighborly/neighborly-donate-api)
+# Dune::Api
+[![Build Status](https://travis-ci.org/dune/dune-donate-api.svg?branch=master)](https://travis-ci.org/dune/dune-donate-api) [![Code Climate](https://codeclimate.com/github/dune/dune-donate-api.png)](https://codeclimate.com/github/dune/dune-donate-api)
 
 ## What
 
-This is the implementation of [Neighbor.ly Donate](https://github.com/neighborly/neighborly-donate)'s API.
+This is the implementation of [dune Donate](https://github.com/dune/dune-donate)'s API.
 
 ## How
 
@@ -11,19 +11,19 @@ Include this gem as dependency of your project, adding the following line in you
 
 ```ruby
 # Gemfile
-gem 'neighborly-api'
+gem 'dune-api'
 ```
 
-Neighborly::Api is a Rails Engine, integrating with your (Neighborly) Rails application with very little of effort. To turn the engine on, mount it in an appropriate route:
+dune::Api is a Rails Engine, integrating with your (dune) Rails application with very little of effort. To turn the engine on, mount it in an appropriate route:
 
 ```ruby
 # config/routes.rb
-mount Neighborly::Api::Engine => '/api/', as: :neighborly_api
+mount dune::Api::Engine => '/api/', as: :dune_api
 ```
 
 ## Contributing
 
-1. Fork it ( https://github.com/neighborly/neighborly-donate-api/fork )
+1. Fork it ( https://github.com/dune/dune-donate-api/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -33,7 +33,7 @@ mount Neighborly::Api::Engine => '/api/', as: :neighborly_api
 
 We prize for our test suite and coverage, so it would be great if you could run the specs to ensure that your patch is not breaking the existing codebase.
 
-When running specs for the first time, you'll need to download Neighborly's source code to be tested against your version of the gem. The following command will install the dummy app in `spec/dummy`.
+When running specs for the first time, you'll need to download dune's source code to be tested against your version of the gem. The following command will install the dummy app in `spec/dummy`.
 
 ```
 $ git submodule init
