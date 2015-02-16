@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Pierre Legrand']
   spec.email         = ['legrand.work@gmail.com']
   spec.summary       = 'dune API'
-  spec.description   = 'This is the implementation of Dune API'
-  spec.homepage      = 'https://github.com/dune/dune-api'
+  spec.description   = 'This is the implementation of Dune API from neighborly api'
+  spec.homepage      = 'https://github.com/FromUte/dune-api'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
