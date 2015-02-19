@@ -12,7 +12,7 @@ Dune::Api::Engine.routes.draw do
       end
     end
 
-    resources :investments, only: %i(index show update destroy) do
+    resources :contributions, only: %i(index show update destroy) do
       member do
         put :confirm
         put :pendent

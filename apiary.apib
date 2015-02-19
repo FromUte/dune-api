@@ -1,8 +1,8 @@
 FORMAT: 1A
 HOST: https://www.dune-investissement.fr/api/
 
-# dune-investissement
-Here you will find how to integrate an application with Dune. Check our [Dashboard source code](https://github.com/dune/dune-dashboard) for a real use case.
+# www.dune-investissement.fr
+Here you will find how to integrate an application with www.dune-investissement.fr. Check our [Dashboard source code](https://github.com/dune/dune-dashboard) for a real use case.
 
 ## Allowed HTTPs requests:
 
@@ -35,8 +35,8 @@ Here you will find how to integrate an application with Dune. Check our [Dashboa
 
 + Parameters
 
-    + email (required, string) ... Your dune account email address
-    + password (required, string) ... Your dune account password
+    + email (required, string) ... Your www.dune-investissement.fr account email address
+    + password (required, string) ... Your www.dune-investissement.fr account password
 
 + Request
 
@@ -597,17 +597,17 @@ Some atributes may not be saved, it will depends from the user access rights.
 + Response 403 (application/json)
 
 
-# Group Investments
+# Group Contributions
 
-## /investments
+## /contributions
 
-### List investments [GET]
+### List contributions [GET]
 
 Requires the user to be an admin.
 
 + Parameters
 
-    + query (optional, string) ... Search for investments
+    + query (optional, string) ... Search for contributions
     + between_values (optional, object) ... Filter between values
     + project_id (optional, string) ... Filter by project id
 
@@ -638,7 +638,7 @@ Requires the user to be an admin.
 + Response 200 (application/json)
 
         {
-          "investments":[
+          "contributions":[
             {
               "id":1714,
               "project_id":62,
@@ -689,7 +689,7 @@ Requires the user to be an admin.
 
         {}
 
-## /investment/{id}/confirm
+## /contribution/{id}/confirm
 
 ### Manually Confirm a Contibution [PUT]
 
@@ -713,7 +713,7 @@ Requires the user to be an admin.
 
         {}
 
-## /investment/{id}/pendent
+## /contribution/{id}/pendent
 
 ### Set a Contibution as Pending [PUT]
 
@@ -737,59 +737,9 @@ Requires the user to be an admin.
 
         {}
 
-## /investment/{id}/refund
+## /contribution/{id}/refund
 
-### Refund an Investment [PUT]
-
-Requires the user to be an admin.
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-
-+ Response 204 (application/json)
-
-+ Response 400 (application/json)
-
-        {}
-
-+ Response 401 (application/json)
-
-        {}
-
-## /investment/{id}/hide
-
-### Hide an Investment [PUT]
-
-Requires the user to be an admin.
-
-It will change the investment state to `refunded_and_canceled`.
-
-+ Request
-
-    + Header
-
-            Accept: application/vnd.api+json;revision=1
-            Authorization: Token your-token-here
-
-
-+ Response 204 (application/json)
-
-+ Response 400 (application/json)
-
-        {}
-
-+ Response 401 (application/json)
-
-        {}
-
-## /investment/{id}/cancel
-
-### Cancel an Investment[PUT]
+### Refund a Contribution [PUT]
 
 Requires the user to be an admin.
 
@@ -809,10 +759,60 @@ Requires the user to be an admin.
 
 + Response 401 (application/json)
 
+        {}
 
-## /investments/{id}
+## /contribution/{id}/hide
 
-### Update an Investment [PUT]
+### Hide a Contribution [PUT]
+
+Requires the user to be an admin.
+
+It will change the contribution state to `refunded_and_canceled`.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+        {}
+
+## /contribution/{id}/cancel
+
+### Cancel a Contribution[PUT]
+
+Requires the user to be an admin.
+
++ Request
+
+    + Header
+
+            Accept: application/vnd.api+json;revision=1
+            Authorization: Token your-token-here
+
+
++ Response 204 (application/json)
+
++ Response 400 (application/json)
+
+        {}
+
++ Response 401 (application/json)
+
+
+## /contributions/{id}
+
+### Update a Contribution [PUT]
 
 Requires the user to be an admin.
 
@@ -826,7 +826,7 @@ Requires the user to be an admin.
     + Body
 
             {
-              "investment":{
+              "contribution":{
                 "value":"10.0"
               }
             }
@@ -852,7 +852,7 @@ Requires the user to be an admin.
         }
 
 
-### Fetch Investment information [GET]
+### Fetch Contribution information [GET]
 
 Requires the user to be an admin.
 
@@ -867,7 +867,7 @@ Requires the user to be an admin.
 + Response 200 (application/json)
 
         {
-          "investment": {
+          "contribution": {
             "id":1714,
             "project_id":62,
             "user_id":1,
@@ -907,7 +907,7 @@ Requires the user to be an admin.
           }
         }
 
-### Destroy an Investment [DELETE]
+### Destroy a Contribution [DELETE]
 
 Requires the user to be an admin.
 
@@ -1756,7 +1756,7 @@ Requires the user to be an admin.
             "id":277,
             "project_id":75,
             "minimum_value":"1000.0",
-            "maximum_investments":null,
+            "maximum_contributions":null,
             "description":"Foo Bar Lorem",
             "created_at":"2014-01-09T02:36:38.297-06:00",
             "updated_at":"2014-01-10T18:44:53.686-06:00",

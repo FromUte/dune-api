@@ -18,7 +18,7 @@ FactoryGirl.define do
     category
   end
 
-  factory :investment do
+  factory :contribution do
     project { create(:project, state: 'online') }
     user
     confirmed_at Time.now

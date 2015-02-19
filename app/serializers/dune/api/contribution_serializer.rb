@@ -1,5 +1,5 @@
 module Dune::Api
-  class InvestmentSerializer < ActiveModel::Serializer
+  class ContributionSerializer < ActiveModel::Serializer
     def rights
       {
         can_pendent: object.can_pendent?,
